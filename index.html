@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
@@ -25,8 +27,10 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--ocean-light);
+            background-image: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
             color: var(--ocean-dark);
             padding: 80px 0;
+            overflow-x: hidden;
         }
 
         .container-tight {
@@ -35,32 +39,58 @@
             padding: 0 25px;
         }
 
-        /* Profile Header */
+        /* Profile Header & Floating Animation */
         .profile-header { text-align: center; margin-bottom: 60px; }
-        .profile-img {
-            width: 150px; height: 150px; border-radius: 50%;
-            object-fit: cover; border: 5px solid var(--white);
-            box-shadow: 0 15px 35px rgba(84, 110, 122, 0.15);
-            margin-bottom: 25px;
+        
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
         }
 
-        h1 { font-weight: 700; font-size: 2.4rem; letter-spacing: -0.04em; margin-bottom: 8px; }
-        .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .profile-img {
+            width: 160px; height: 160px; border-radius: 50%;
+            object-fit: cover; border: 6px solid var(--white);
+            box-shadow: 0 20px 40px rgba(84, 110, 122, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(84, 110, 122, 0.3);
+        }
+
+        h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-bottom: 8px; }
+        .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; opacity: 0.8; }
 
         /* Section Titles */
         .section-title {
             font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.2em; color: var(--ocean-medium);
-            margin-bottom: 20px; margin-top: 50px;
+            margin-bottom: 25px; margin-top: 50px;
             display: flex; align-items: center; gap: 12px;
         }
         .section-title::after { content: ""; height: 1px; flex-grow: 1; background: rgba(176, 190, 197, 0.4); }
 
-        /* Info Cards */
+        /* Info Cards Glassmorphism */
         .info-card {
-            background: var(--white); border-radius: 24px; padding: 30px;
-            box-shadow: 0 4px 20px rgba(84, 110, 122, 0.05);
-            border: 1px solid rgba(176, 190, 197, 0.2);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 28px; padding: 35px;
+            box-shadow: 0 10px 30px rgba(84, 110, 122, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(84, 110, 122, 0.1);
         }
 
         .info-item {
@@ -68,77 +98,89 @@
             border-left: 2px solid var(--ocean-light); padding-bottom: 25px;
         }
         .info-item:last-child { padding-bottom: 0; border-left: 2px solid transparent; }
+        
         .info-item::before {
             content: ''; position: absolute; left: -8px; top: 6px;
             width: 14px; height: 14px; background: var(--ocean-medium);
             border-radius: 50%; border: 3px solid var(--white);
+            transition: all 0.3s ease;
         }
-        .info-item.active::before { background: var(--ocean-primary); }
+        .info-item.active::before { background: var(--ocean-primary); box-shadow: 0 0 0 4px rgba(84, 110, 122, 0.1); }
+        
         .item-title { font-weight: 600; font-size: 1.05rem; color: var(--ocean-dark); }
         .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
         
         .badge-now { 
             background: #e0f2f1; color: #00796b; font-size: 0.65rem; 
-            padding: 3px 10px; border-radius: 50px; font-weight: 700; margin-left: 8px; 
+            padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(0, 121, 107, 0.1);
         }
 
         /* Portfolio Grid (2x2) */
         .portfolio-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
         }
 
         .btn-work {
             text-decoration: none; color: var(--ocean-primary);
             background: var(--white); border: 1px solid rgba(176, 190, 197, 0.3);
-            padding: 25px 15px; border-radius: 20px; text-align: center;
-            font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease;
-            display: flex; flex-direction: column; gap: 10px;
+            padding: 28px 15px; border-radius: 24px; text-align: center;
+            font-size: 0.95rem; font-weight: 600; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; gap: 12px;
         }
-        .btn-work i { font-size: 1.6rem; }
+        
+        .btn-work i { font-size: 1.8rem; transition: all 0.3s ease; }
+        
         .btn-work:hover {
             background: var(--ocean-primary); color: var(--white);
-            transform: translateY(-5px); box-shadow: 0 10px 20px rgba(84, 110, 122, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(84, 110, 122, 0.2);
+            border-color: var(--ocean-primary);
         }
+
+        .btn-work:hover i { transform: scale(1.2) rotate(5deg); }
 
         /* Award Card */
         .award-card {
             text-decoration: none; display: flex; align-items: center; gap: 20px;
-            background: var(--white); padding: 20px 25px; border-radius: 20px;
-            border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.3s ease;
+            background: var(--white); padding: 25px 30px; border-radius: 24px;
+            border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.4s ease;
         }
+        
         .award-icon {
-            width: 50px; height: 50px; background: #fff9e6; color: #fbc02d;
+            width: 55px; height: 55px; background: #fff9e6; color: #fbc02d;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; border-radius: 15px;
+            font-size: 1.6rem; border-radius: 18px; transition: all 0.3s ease;
         }
-        .award-card:hover { border-color: var(--accent-gold); transform: translateX(5px); }
-        .award-info h4 { margin: 0; font-size: 1rem; font-weight: 600; color: var(--ocean-dark); }
-        .award-info p { margin: 0; font-size: 0.85rem; color: var(--ocean-primary); }
+        
+        .award-card:hover { 
+            border-color: var(--accent-gold); 
+            transform: translateX(10px);
+            background: #fffcf5;
+            box-shadow: 0 10px 25px rgba(176, 141, 87, 0.1);
+        }
+        .award-card:hover .award-icon { transform: rotate(-10deg) scale(1.1); }
 
         /* Contact Section */
         .contact-card {
-            background: var(--ocean-dark);
-            color: var(--white);
-            padding: 30px;
-            border-radius: 24px;
-            text-align: center;
-            margin-top: 10px;
+            background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%);
+            color: var(--white); padding: 40px 30px; border-radius: 30px;
+            text-align: center; margin-top: 15px; position: relative; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2);
         }
+
         .contact-link {
-            color: var(--ocean-medium);
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.3s ease;
+            color: var(--ocean-medium); text-decoration: none;
+            font-size: 1.2rem; font-weight: 500; display: inline-flex;
+            align-items: center; gap: 12px; transition: all 0.3s ease;
+            position: relative; z-index: 1;
         }
-        .contact-link:hover { color: var(--white); }
+        .contact-link:hover { color: var(--white); transform: scale(1.05); }
 
         @media (max-width: 480px) {
             .portfolio-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.1rem; }
+            h1 { font-size: 2.2rem; }
+            body { padding: 40px 0; }
         }
     </style>
 </head>
@@ -147,16 +189,18 @@
 <div class="container-tight">
     
     <!-- Profile Header -->
-    <div class="profile-header">
-        <img src="https://scontent.fbkk12-4.fna.fbcdn.net/v/t39.30808-6/556491357_122178813320579909_2943996564924045118_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeEbAVyrsO-qvTcwaqfL_AA8xrOzANChm7vGs7MA0KGbu2cOpHWnhm17HW68Dz4HZ60p-FnhHkemMxirWWkSlNPT&_nc_ohc=WBF3OpEB0jEQ7kNvwFe6xvK&_nc_oc=Admho7eDB8zFhMo8wjY_MgzlojJCCIXrP-hD83W7w6FmLRh1Hj5PnHxIjXIh5UGzOVs&_nc_zt=23&_nc_ht=scontent.fbkk12-4.fna&_nc_gid=Cco8x3n5vNwNQXBLrmdISQ&oh=00_Aft7xW1k_UNScmkrdkMKD1KkA9zR0NoXxo5q9-_L8-9S6w&oe=699DA1FA" alt="Warut S." class="profile-img">
-        <h1>Warut S.</h1>
+    <div class="profile-header" data-aos="fade-down" data-aos-duration="1000">
+        <div class="profile-img-container">
+            <img src="https://scontent.fbkk12-4.fna.fbcdn.net/v/t39.30808-6/556491357_122178813320579909_2943996564924045118_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeEbAVyrsO-qvTcwaqfL_AA8xrOzANChm7vGs7MA0KGbu2cOpHWnhm17HW68Dz4HZ60p-FnhHkemMxirWWkSlNPT&_nc_ohc=WBF3OpEB0jEQ7kNvwFe6xvK&_nc_oc=Admho7eDB8zFhMo8wjY_MgzlojJCCIXrP-hD83W7w6FmLRh1Hj5PnHxIjXIh5UGzOVs&_nc_zt=23&_nc_ht=scontent.fbkk12-4.fna&_nc_gid=Cco8x3n5vNwNQXBLrmdISQ&oh=00_Aft7xW1k_UNScmkrdkMKD1KkA9zR0NoXxo5q9-_L8-9S6w&oe=699DA1FA" alt="Warut S." class="profile-img">
+        </div>
+        <h1 class="mt-3">Warut S.</h1>
         <p class="sub-title">Audiovisual Education Specialist & IT Enthusiast</p>
     </div>
 
-     <!-- 3. Portfolio Samples -->
-    <div class="section-title">Portfolio Samples</div>
-    <div class="portfolio-grid">
-        <a href="web-desing.html" class="btn-work">
+    <!-- 3. Portfolio Samples -->
+    <div class="section-title" data-aos="fade-right">Portfolio Samples</div>
+    <div class="portfolio-grid" data-aos="zoom-in" data-aos-delay="200">
+        <a href="web-design.html" class="btn-work">
             <i class="fas fa-laptop-code"></i>
             Websites
         </a>
@@ -168,16 +212,15 @@
             <i class="fas fa-film"></i>
             Video Editing
         </a>
-        <!-- อัปเดตลิงก์ TikTok -->
         <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work">
             <i class="fas fa-spa"></i>
             Floral Crafts
         </a>
     </div>
 
-<!-- 2. Work Experience -->
-<div class="section-title">Work Experience</div>
-    <div class="info-card">
+    <!-- 2. Work Experience -->
+    <div class="section-title" data-aos="fade-right">Work Experience</div>
+    <div class="info-card" data-aos="fade-up" data-aos-delay="300">
         <div class="info-item active">
             <div class="item-title">ODL Ubon Ratchathani University <span class="badge-now">Now</span></div>
             <div class="item-desc">Audiovisual Education Specialist</div>
@@ -193,8 +236,8 @@
     </div>
 
     <!-- 1. Education -->
-    <div class="section-title">Education</div>
-    <div class="info-card">
+    <div class="section-title" data-aos="fade-right">Education</div>
+    <div class="info-card" data-aos="fade-up" data-aos-delay="400">
         <div class="info-item">
             <div class="item-title">Ubon Ratchathani University</div>
             <div class="item-desc">
@@ -213,8 +256,8 @@
     </div>
 
     <!-- 4. Awards -->
-    <div class="section-title">Awards & Achievements</div>
-    <a href="awards.html" class="award-card">
+    <div class="section-title" data-aos="fade-right">Awards & Achievements</div>
+    <a href="awards.html" class="award-card" data-aos="flip-up" data-aos-delay="500">
         <div class="award-icon">
             <i class="fas fa-trophy"></i>
         </div>
@@ -226,9 +269,9 @@
     </a>
 
     <!-- 5. Contact Section -->
-    <div class="section-title">Get In Touch</div>
-    <div class="contact-card">
-        <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 10px;">Feel free to reach out via email:</p>
+    <div class="section-title" data-aos="fade-right">Get In Touch</div>
+    <div class="contact-card" data-aos="zoom-out" data-aos-delay="600">
+        <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 10px;">Interested in collaboration?</p>
         <a href="mailto:warut.s@ubu.ac.th" class="contact-link">
             <i class="fas fa-envelope"></i>
             warut.s@ubu.ac.th
@@ -237,11 +280,25 @@
 
     <!-- Footer -->
     <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.75rem; color: var(--ocean-medium); letter-spacing: 0.05em;">
-        &copy; <?php echo date("Y"); ?> • DESIGNED BY WARUT S.
+        &copy; <span id="current-year"></span> • DESIGNED BY WARUT S.
     </footer>
 
 </div>
 
+<!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50
+    });
+
+    // Set Dynamic Year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
