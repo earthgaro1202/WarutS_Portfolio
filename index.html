@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warut S. | Digital Portfolio</title>
-        <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/54/05/54/5405546f795e7ea4549a7b43e0d60704.jpg">
+    <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/54/05/54/5405546f795e7ea4549a7b43e0d60704.jpg">
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,37 +40,57 @@
             padding: 0 25px;
         }
 
-        /* Profile Header & Floating Animation */
+        /* --- Profile Header & 3-Image Auto-Switcher --- */
         .profile-header { text-align: center; margin-bottom: 60px; }
         
         .profile-img-container {
             position: relative;
             display: inline-block;
+            width: 165px; /* กำหนดขนาดจองพื้นที่ไว้ */
+            height: 165px;
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
         }
 
         .profile-img {
             width: 160px; height: 160px; border-radius: 50%;
             object-fit: cover; border: 6px solid var(--white);
             box-shadow: 0 20px 40px rgba(84, 110, 122, 0.2);
-            transition: all 0.3s ease;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0; /* เริ่มต้นให้จางไว้ทั้งหมด */
+            transition: transform 0.3s ease;
+            animation: imgFadeLoop 12s infinite; /* เล่นแอนิเมชันสลับรูป 12 วินาทีวนลูป */
         }
 
-        .profile-img:hover {
+        /* รูปที่ 1: เริ่มทันที */
+        .img-1 { animation-delay: 0s; }
+        /* รูปที่ 2: เริ่มวินาทีที่ 4 */
+        .img-2 { animation-delay: 4s; }
+        /* รูปที่ 3: เริ่มวินาทีที่ 8 */
+        .img-3 { animation-delay: 8s; }
+
+        @keyframes imgFadeLoop {
+            0% { opacity: 0; }
+            8% { opacity: 1; }   /* จางขึ้นมา */
+            33% { opacity: 1; }  /* ค้างไว้จนถึง 1/3 ของเวลาทั้งหมด */
+            41% { opacity: 0; }  /* จางออก */
+            100% { opacity: 0; } /* รอวนใหม่ */
+        }
+
+        .profile-img-container:hover .profile-img {
             transform: scale(1.05);
             box-shadow: 0 25px 50px rgba(84, 110, 122, 0.3);
         }
 
-        h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-bottom: 8px; }
+        h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 15px; }
         .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; opacity: 0.8; }
 
-        /* Section Titles */
+        /* --- Section Titles --- */
         .section-title {
             font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.2em; color: var(--ocean-medium);
@@ -79,7 +99,7 @@
         }
         .section-title::after { content: ""; height: 1px; flex-grow: 1; background: rgba(176, 190, 197, 0.4); }
 
-        /* Info Cards Glassmorphism */
+        /* --- Info Cards Glassmorphism --- */
         .info-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
@@ -88,100 +108,57 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             transition: all 0.4s ease;
         }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(84, 110, 122, 0.1);
-        }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(84, 110, 122, 0.1); }
 
-        .info-item {
-            position: relative; padding-left: 25px;
-            border-left: 2px solid var(--ocean-light); padding-bottom: 25px;
-        }
+        .info-item { position: relative; padding-left: 25px; border-left: 2px solid var(--ocean-light); padding-bottom: 25px; }
         .info-item:last-child { padding-bottom: 0; border-left: 2px solid transparent; }
-        
         .info-item::before {
             content: ''; position: absolute; left: -8px; top: 6px;
             width: 14px; height: 14px; background: var(--ocean-medium);
             border-radius: 50%; border: 3px solid var(--white);
-            transition: all 0.3s ease;
         }
         .info-item.active::before { background: var(--ocean-primary); box-shadow: 0 0 0 4px rgba(84, 110, 122, 0.1); }
-        
         .item-title { font-weight: 600; font-size: 1.05rem; color: var(--ocean-dark); }
         .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
-        
-        .badge-now { 
-            background: #e0f2f1; color: #00796b; font-size: 0.65rem; 
-            padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px;
-            box-shadow: 0 2px 8px rgba(0, 121, 107, 0.1);
-        }
+        .badge-now { background: #e0f2f1; color: #00796b; font-size: 0.65rem; padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px; }
 
-        /* Portfolio Grid (2x2) */
-        .portfolio-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
-        }
-
+        /* --- Portfolio Grid (2x2) --- */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
         .btn-work {
-            text-decoration: none; color: var(--ocean-primary);
-            background: var(--white); border: 1px solid rgba(176, 190, 197, 0.3);
-            padding: 28px 15px; border-radius: 24px; text-align: center;
+            text-decoration: none; color: var(--ocean-primary); background: var(--white);
+            border: 1px solid rgba(176, 190, 197, 0.3); padding: 28px 15px; border-radius: 24px; text-align: center;
             font-size: 0.95rem; font-weight: 600; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; flex-direction: column; gap: 12px;
         }
-        
         .btn-work i { font-size: 1.8rem; transition: all 0.3s ease; }
-        
         .btn-work:hover {
             background: var(--ocean-primary); color: var(--white);
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 30px rgba(84, 110, 122, 0.2);
-            border-color: var(--ocean-primary);
         }
-
         .btn-work:hover i { transform: scale(1.2) rotate(5deg); }
 
-        /* Award Card */
+        /* --- Award Card --- */
         .award-card {
             text-decoration: none; display: flex; align-items: center; gap: 20px;
             background: var(--white); padding: 25px 30px; border-radius: 24px;
             border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.4s ease;
         }
-        
-        .award-icon {
-            width: 55px; height: 55px; background: #fff9e6; color: #fbc02d;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem; border-radius: 18px; transition: all 0.3s ease;
-        }
-        
-        .award-card:hover { 
-            border-color: var(--accent-gold); 
-            transform: translateX(10px);
-            background: #fffcf5;
-            box-shadow: 0 10px 25px rgba(176, 141, 87, 0.1);
-        }
-        .award-card:hover .award-icon { transform: rotate(-10deg) scale(1.1); }
+        .award-icon { width: 55px; height: 55px; background: #fff9e6; color: #fbc02d; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 18px; transition: all 0.3s ease; }
+        .award-card:hover { border-color: var(--accent-gold); transform: translateX(10px); background: #fffcf5; }
 
-        /* Contact Section */
+        /* --- Contact --- */
         .contact-card {
             background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%);
             color: var(--white); padding: 40px 30px; border-radius: 30px;
-            text-align: center; margin-top: 15px; position: relative; overflow: hidden;
-            box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2);
+            text-align: center; margin-top: 15px; box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2);
         }
-
-        .contact-link {
-            color: var(--ocean-medium); text-decoration: none;
-            font-size: 1.2rem; font-weight: 500; display: inline-flex;
-            align-items: center; gap: 12px; transition: all 0.3s ease;
-            position: relative; z-index: 1;
-        }
+        .contact-link { color: var(--ocean-medium); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s ease; }
         .contact-link:hover { color: var(--white); transform: scale(1.05); }
 
         @media (max-width: 480px) {
             .portfolio-grid { grid-template-columns: 1fr; }
             h1 { font-size: 2.2rem; }
-            body { padding: 40px 0; }
         }
     </style>
 </head>
@@ -189,39 +166,35 @@
 
 <div class="container-tight">
     
-    <!-- Profile Header -->
+    <!-- Profile Header with 3 Switching Images -->
     <div class="profile-header" data-aos="fade-down" data-aos-duration="1000">
-       <div class="profile-img-container">
+        <div class="profile-img-container">
             <img src="https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-6/555708555_122178812732579909_2507779576495177307_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFa3BfyQUOf6qqSBETuxyKgqlJfDqzT7ueqUl8OrNPu5zHhiTtjZ66q57Lxja1s3xnKKF4tk1C7g_4ndp6C6t7z&_nc_ohc=YMn8nSl8OncQ7kNvwFRRAat&_nc_oc=Adkx0iv3mr5awTI1lQirLqPc-Movru6Zg74AOh-Yl4WxtyqwFwr82SV-zJ53sSxFUzg&_nc_zt=23&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=5Puztaq5kH_dg_9FQNuBgA&oh=00_Afvv-RwRL0d7KgkJ1awU9i36wK4UJiFXO4Uys0rksjoBeA&oe=699E0C6D" class="profile-img img-1" alt="Profile 1">
             <img src="https://scontent.fbkk9-2.fna.fbcdn.net/v/t39.30808-6/520229472_122168520866579909_3150283610639444776_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFmsehmsxjSbYw3aSAOg21j7tPiNUAFjhnu0-I1QAWOGZrSu-he4VM4UbqELinET4rIn_zlg6GPMKkzNc_zxufg&_nc_ohc=Ap4V2zdf24kQ7kNvwHfPig1&_nc_oc=AdkzDS4Pe0eRSabCphT0BOaij2Kd4INjEtdEK6lXePl2Cx8o905um55HnbnFpvknXDU&_nc_zt=23&_nc_ht=scontent.fbkk9-2.fna&_nc_gid=rf37vmeOuod3UgftB2dE9g&oh=00_AfvjmKd3vP5TGe3copYSJr2isrgOKBt4TlQG2ikbGLz8Vw&oe=699E24D5" class="profile-img img-2" alt="Profile 2">
             <img src="https://scontent.fbkk13-3.fna.fbcdn.net/v/t51.75761-15/479489471_17867851716315569_3613117066442979958_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeG_CCTRHmAb56STrLqHGEXMb8TDfwhgT3pvxMN_CGBPes252AzQ5ypB_yr30xrRbRapzX1lBZVDir7StLnnaxYN&_nc_ohc=pqBSyTal2NcQ7kNvwGgY5QN&_nc_oc=AdmuVxGlsYvU1i1IB3RSeuYipNG7IQ08n1DJoWGyHwvRTrrrhl0deG8Y2ZInZh4arU8&_nc_zt=23&_nc_ht=scontent.fbkk13-3.fna&_nc_gid=2LTSzg1-sYrxR3APMMN9Hg&oh=00_AfuSLP2E49a4_HWN7eAS998p_IUqXVFRPLl5gWLIc5xaxg&oe=699E0499" class="profile-img img-3" alt="Profile 3">
         </div>
-        <h1 class="mt-3">Warut S.</h1>
+        <h1>Warut S.</h1>
         <p class="sub-title">Audiovisual Education Specialist & IT Enthusiast</p>
     </div>
 
-    <!-- 3. Portfolio Samples -->
+    <!-- Portfolio Section -->
     <div class="section-title" data-aos="fade-right">Portfolio Samples</div>
     <div class="portfolio-grid" data-aos="zoom-in" data-aos-delay="200">
-        <a href="web-desing.html" class="btn-work">
-            <i class="fas fa-laptop-code"></i>
-            Websites
+        <a href="web-design.html" class="btn-work">
+            <i class="fas fa-laptop-code"></i> Websites
         </a>
         <a href="graphic.html" class="btn-work">
-            <i class="fas fa-bezier-curve"></i>
-            Graphic Design
+            <i class="fas fa-bezier-curve"></i> Graphic Design
         </a>
         <a href="video.html" class="btn-work">
-            <i class="fas fa-film"></i>
-            Video Editing
+            <i class="fas fa-film"></i> Video Editing
         </a>
         <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work">
-            <i class="fas fa-spa"></i>
-            Floral Crafts
+            <i class="fas fa-spa"></i> Floral Crafts
         </a>
     </div>
 
-    <!-- 2. Work Experience -->
+    <!-- Experience Section -->
     <div class="section-title" data-aos="fade-right">Work Experience</div>
     <div class="info-card" data-aos="fade-up" data-aos-delay="300">
         <div class="info-item active">
@@ -238,15 +211,12 @@
         </div>
     </div>
 
-    <!-- 1. Education -->
+    <!-- Education Section -->
     <div class="section-title" data-aos="fade-right">Education</div>
     <div class="info-card" data-aos="fade-up" data-aos-delay="400">
         <div class="info-item">
             <div class="item-title">Ubon Ratchathani University</div>
-            <div class="item-desc">
-                Bachelor of Science (Information Technology)<br>
-                <small>Faculty of Science</small>
-            </div>
+            <div class="item-desc">Bachelor of Science (Information Technology) <br><small>Faculty of Science</small></div>
         </div>
         <div class="info-item">
             <div class="item-title">Assumption College Ubonratchathani</div>
@@ -258,12 +228,10 @@
         </div>
     </div>
 
-    <!-- 4. Awards -->
+    <!-- Awards Section -->
     <div class="section-title" data-aos="fade-right">Awards & Achievements</div>
     <a href="awards.html" class="award-card" data-aos="flip-up" data-aos-delay="500">
-        <div class="award-icon">
-            <i class="fas fa-trophy"></i>
-        </div>
+        <div class="award-icon"><i class="fas fa-trophy"></i></div>
         <div class="award-info">
             <h4>Honors & Recognitions</h4>
             <p>View certifications and awards</p>
@@ -271,36 +239,26 @@
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
     </a>
 
-    <!-- 5. Contact Section -->
+    <!-- Contact Section -->
     <div class="section-title" data-aos="fade-right">Get In Touch</div>
     <div class="contact-card" data-aos="zoom-out" data-aos-delay="600">
         <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 10px;">Interested in collaboration?</p>
         <a href="mailto:warut.s@ubu.ac.th" class="contact-link">
-            <i class="fas fa-envelope"></i>
-            warut.s@ubu.ac.th
+            <i class="fas fa-envelope"></i> warut.s@ubu.ac.th
         </a>
     </div>
 
-    <!-- Footer -->
-    <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.75rem; color: var(--ocean-medium); letter-spacing: 0.05em;">
+    <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.75rem; color: var(--ocean-medium);">
         &copy; <span id="current-year"></span> • DESIGNED BY WARUT S.
     </footer>
 
 </div>
 
-<!-- Bootstrap 5 JS -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- AOS JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // Initialize AOS
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 50
-    });
-
-    // Set Dynamic Year
+    AOS.init({ duration: 800, once: true, offset: 50 });
     document.getElementById('current-year').textContent = new Date().getFullYear();
 </script>
 </body>
