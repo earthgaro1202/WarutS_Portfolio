@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Portfolio | Warut S.</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --ocean-dark: #263238;
+            --ocean-primary: #546e7a;
+            --ocean-light: #f4f7f9;
+            --ocean-medium: #b0bec5;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ocean-light);
+            background-image: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
+            color: var(--ocean-dark);
+            padding: 40px 0 80px 0;
+            overflow-x: hidden;
+        }
+
+        .container-gallery {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Animated Back Button */
+        .nav-back { margin-bottom: 40px; }
+        .btn-back {
+            text-decoration: none; color: var(--ocean-primary);
+            font-size: 0.95rem; font-weight: 600; display: inline-flex;
+            align-items: center; gap: 10px; 
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-back i { transition: transform 0.3s ease; }
+        .btn-back:hover { 
+            color: var(--white); 
+            background: var(--ocean-primary);
+            transform: translateX(-5px);
+            box-shadow: 0 10px 20px rgba(84, 110, 122, 0.2);
+        }
+        .btn-back:hover i { transform: translateX(-5px); }
+
+        header { margin-bottom: 50px; }
+        h2 { font-weight: 700; font-size: 2.8rem; letter-spacing: -0.04em; margin-bottom: 10px; }
+        .section-desc { color: var(--ocean-primary); font-weight: 300; font-size: 1.15rem; opacity: 0.8; }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* Gallery Item with Premium Hover */
+        .gallery-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: var(--white);
+            border-radius: 28px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            box-shadow: 0 10px 30px rgba(84, 110, 122, 0.08);
+            border: 4px solid var(--white);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-link:hover .gallery-item {
+            transform: scale(1.04) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(84, 110, 122, 0.15);
+            z-index: 2;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        /* Glassmorphism Overlay */
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(38, 50, 56, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .gallery-link:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .overlay-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; transform: translateY(15px); transition: all 0.4s ease; }
+        .overlay-tag { 
+            font-size: 0.75rem; 
+            background: rgba(255,255,255,0.2); 
+            padding: 5px 15px; 
+            border-radius: 50px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transform: translateY(15px);
+            transition: all 0.4s ease 0.1s;
+        }
+        
+        .gallery-link:hover .overlay-title,
+        .gallery-link:hover .overlay-tag {
+            transform: translateY(0);
+        }
+
+        .zoom-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            opacity: 0.9;
+            transform: scale(0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .gallery-link:hover .zoom-icon { transform: scale(1); }
+
+        @media (max-width: 992px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            h2 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-gallery">
+    
+    <!-- Navigation -->
+    <div class="nav-back" data-aos="fade-right">
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <header data-aos="fade-up">
+        <h2>Graphic Portfolio</h2>
+        <p class="section-desc">Visual stories and digital creations. Click to view full screen.</p>
+    </header>
+
+    <!-- Unified Gallery Grid -->
+    <div class="gallery-grid">
+    
+        <!-- ชิ้นที่ 1 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://scontent.fbkk8-4.fna.fbcdn.net/v/t39.30808-6/536275805_122175977714362822_7843630954512264162_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeEcqP1bWu5TKhQTlMDl4lalannwo7MlSrxqefCjsyVKvPjHsNskpDePiyuNNbAQ_dwWNsBuzjBta1aU3nRzSHJB&_nc_ohc=PhVjR6MbDucQ7kNvwF-HsDn&_nc_oc=AdmSfyl7NpyQVckPEhehIAnHHgkYFfcIRa9217jqLA9-0vevYQScUhtqrfnQ62olFs4&_nc_zt=23&_nc_ht=scontent.fbkk8-4.fna&_nc_gid=etGJyrdkFTn8hQ6Sr8SoUw&oh=00_AfvADIs4N_IJvV6PlcDFPUW-hPxuKqgLJILMpDeswz704g&oe=699DCF4E" class="gallery-link" data-aos="fade-up" data-aos-delay="100">
+            <div class="gallery-item">
+                <img src="https://scontent.fbkk8-4.fna.fbcdn.net/v/t39.30808-6/536275805_122175977714362822_7843630954512264162_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeEcqP1bWu5TKhQTlMDl4lalannwo7MlSrxqefCjsyVKvPjHsNskpDePiyuNNbAQ_dwWNsBuzjBta1aU3nRzSHJB&_nc_ohc=PhVjR6MbDucQ7kNvwF-HsDn&_nc_oc=AdmSfyl7NpyQVckPEhehIAnHHgkYFfcIRa9217jqLA9-0vevYQScUhtqrfnQ62olFs4&_nc_zt=23&_nc_ht=scontent.fbkk8-4.fna&_nc_gid=etGJyrdkFTn8hQ6Sr8SoUw&oh=00_AfvADIs4N_IJvV6PlcDFPUW-hPxuKqgLJILMpDeswz704g&oe=699DCF4E" class="gallery-img" alt="Project 1">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic PR</div>
+                    <div class="overlay-tag">Digital Ads</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- ชิ้นที่ 2 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://scontent.fbkk12-3.fna.fbcdn.net/v/t39.30808-6/611331271_122190774794362822_5941020064740518259_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFVNCocE_XT0JtF2Rxpxa3kglfXPy0kxsuCV9c_LSTGy8JLU1Ib17sHr64VRmpnUlggAo9Iuncg_hZeFGeNp-5s&_nc_ohc=NdFp9Nt7CMYQ7kNvwG_2lYh&_nc_oc=Adk4YjS2X7erB5pEk_dgnEpsYYy-zEK-evC9mBqHkFTpUUkt6swMBXFq91K85d048MM&_nc_zt=23&_nc_ht=scontent.fbkk12-3.fna&_nc_gid=IcJ4Kg_oBES1K0JZYKW2aA&oh=00_AfsuxLlsWyLRwSRMHRKyNmLP21-phTznS7ozveutBH4tMg&oe=699DE84D" class="gallery-link" data-aos="fade-up" data-aos-delay="200">
+            <div class="gallery-item">
+                <img src="https://scontent.fbkk12-3.fna.fbcdn.net/v/t39.30808-6/611331271_122190774794362822_5941020064740518259_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFVNCocE_XT0JtF2Rxpxa3kglfXPy0kxsuCV9c_LSTGy8JLU1Ib17sHr64VRmpnUlggAo9Iuncg_hZeFGeNp-5s&_nc_ohc=NdFp9Nt7CMYQ7kNvwG_2lYh&_nc_oc=Adk4YjS2X7erB5pEk_dgnEpsYYy-zEK-evC9mBqHkFTpUUkt6swMBXFq91K85d048MM&_nc_zt=23&_nc_ht=scontent.fbkk12-3.fna&_nc_gid=IcJ4Kg_oBES1K0JZYKW2aA&oh=00_AfsuxLlsWyLRwSRMHRKyNmLP21-phTznS7ozveutBH4tMg&oe=699DE84D" class="gallery-img" alt="Project 2">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic PR</div>
+                    <div class="overlay-tag">Digital Ads</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- ชิ้นที่ 3 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://img5.pic.in.th/file/secure-sv1/OAR-OAR-OAR.png" class="gallery-link" data-aos="fade-up" data-aos-delay="300">
+            <div class="gallery-item">
+                <img src="https://img5.pic.in.th/file/secure-sv1/OAR-OAR-OAR.png" class="gallery-img" alt="Project 3">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic</div>
+                    <div class="overlay-tag">Social Media Content</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- ชิ้นที่ 4 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-6/619210179_122192170964362822_313779088505747307_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHaEZq61uHoKI4zSot_HAKnvgI1gtPBmhK-AjWC08GaEmvAD-1PkA2jtX3Nr1HaEFf8tJ7KLbEzFGLCNNxJkdjH&_nc_ohc=2fiyPo_iIWEQ7kNvwHAT9ZC&_nc_oc=Admwj_YTwtdvAcSh38yWl4kb3azTWrLmsV2aSKGuaiay0S-e9sirryzBAi3XCtGcza4&_nc_zt=23&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=9gsVV1J3-jh5H3wlh0aJTQ&oh=00_AfsJoVss2m764wtvuzpxf3A3dqAbUPupoGfpUW_ecwa-kw&oe=699DC9D1" class="gallery-link" data-aos="fade-up" data-aos-delay="100">
+            <div class="gallery-item">
+                <img src="https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-6/619210179_122192170964362822_313779088505747307_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHaEZq61uHoKI4zSot_HAKnvgI1gtPBmhK-AjWC08GaEmvAD-1PkA2jtX3Nr1HaEFf8tJ7KLbEzFGLCNNxJkdjH&_nc_ohc=2fiyPo_iIWEQ7kNvwHAT9ZC&_nc_oc=Admwj_YTwtdvAcSh38yWl4kb3azTWrLmsV2aSKGuaiay0S-e9sirryzBAi3XCtGcza4&_nc_zt=23&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=9gsVV1J3-jh5H3wlh0aJTQ&oh=00_AfsJoVss2m764wtvuzpxf3A3dqAbUPupoGfpUW_ecwa-kw&oe=699DC9D1" class="gallery-img" alt="Project 4">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic</div>
+                    <div class="overlay-tag">Social Media Content</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- ชิ้นที่ 5 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://img5.pic.in.th/file/secure-sv1/-Solar-Rooftop-OAR-UBU.png" class="gallery-link" data-aos="fade-up" data-aos-delay="200">
+            <div class="gallery-item">
+                <img src="https://img5.pic.in.th/file/secure-sv1/-Solar-Rooftop-OAR-UBU.png" class="gallery-img" alt="Project 5">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic</div>
+                    <div class="overlay-tag">Social Media Content</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- ชิ้นที่ 6 -->
+        <a data-fslightbox="gallery" data-type="image" href="https://img2.pic.in.th/-28--2567.png" class="gallery-link" data-aos="fade-up" data-aos-delay="300">
+            <div class="gallery-item">
+                <img src="https://img2.pic.in.th/-28--2567.png" class="gallery-img" alt="Project 6">
+                <div class="gallery-overlay">
+                    <i class="fas fa-expand-alt zoom-icon"></i>
+                    <div class="overlay-title">Infographic</div>
+                    <div class="overlay-tag">Social Media Content</div>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.8rem; color: var(--ocean-medium);">
+        &copy; <span id="year"></span> • Designed by Warut S.
+    </footer>
+
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- fslightbox JS (สำหรับขยายรูป) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.0.9/index.min.js"></script>
+
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+    // Set Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Fix for Lightbox to ensure it works on every click
+    window.addEventListener('load', function() {
+        refreshFsLightbox();
+    });
+</script>
+</body>
+</html>
