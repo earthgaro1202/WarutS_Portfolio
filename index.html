@@ -40,7 +40,7 @@
             padding: 0 25px;
         }
 
-        /* --- Profile Header & 3-Image Auto-Switcher --- */
+        /* --- Profile Header & Snappy Image Switcher --- */
         .profile-header { text-align: center; margin-bottom: 60px; }
         
         .profile-img-container {
@@ -53,44 +53,51 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-15px); }
         }
 
         .profile-img {
-            width: 160px; height: 160px; border-radius: 50%;
-            object-fit: cover; border: 6px solid var(--white);
-            box-shadow: 0 20px 40px rgba(84, 110, 122, 0.2);
+            width: 160px; 
+            height: 160px; 
+            border-radius: 50%;
+            object-fit: cover; 
+            border: 6px solid var(--white);
+            box-shadow: 0 25px 50px rgba(84, 110, 122, 0.15);
             position: absolute;
-            top: 0; left: 0;
+            top: 0; 
+            left: 0;
             opacity: 0;
-            transition: transform 0.3s ease;
-            animation: imgFadeLoop 12s infinite;
+            transform: scale(0.9) translateY(10px);
+            transition: transform 0.5s ease;
+            animation: snappySwitch 12s infinite;
         }
 
-        .img-1 { animation-delay: 0s; }
-        .img-2 { animation-delay: 4s; }
-        .img-3 { animation-delay: 8s; }
+        /* ลำดับชั้นรูปภาพและการหน่วงเวลา */
+        .img-1 { animation-delay: 0s; z-index: 3; }
+        .img-2 { animation-delay: 4s; z-index: 2; }
+        .img-3 { animation-delay: 8s; z-index: 1; }
 
-        @keyframes imgFadeLoop {
-            0%, 8%, 33%, 41% { opacity: 0; }
-            12%, 29% { opacity: 1; }
+        @keyframes snappySwitch {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            2% { opacity: 1; transform: scale(1) translateY(0); } /* เด้งขึ้นมาทับทันที */
+            33.33% { opacity: 1; transform: scale(1) translateY(0); } /* ค้างไว้ */
+            35.33% { opacity: 0; transform: scale(0.9) translateY(10px); } /* หายไปเพื่อเปลี่ยนรูปถัดไป */
             100% { opacity: 0; }
         }
 
         .profile-img-container:hover .profile-img {
             transform: scale(1.05);
-            box-shadow: 0 25px 50px rgba(84, 110, 122, 0.3);
+            box-shadow: 0 30px 60px rgba(84, 110, 122, 0.25);
         }
 
         h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 15px; }
         
-        /* Typing Area Styling */
         .sub-title { 
             color: var(--ocean-primary); 
             font-weight: 400; 
             font-size: 1.1rem; 
             opacity: 0.9;
-            min-height: 24px; /* กันเนื้อหากระตุกเวลาข้อความหายไป */
+            min-height: 24px;
         }
 
         /* --- Section Titles --- */
@@ -120,7 +127,7 @@
         .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
         .badge-now { background: #e0f2f1; color: #00796b; font-size: 0.65rem; padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px; }
 
-        /* --- Portfolio Grid --- */
+        /* --- Portfolio Grid (2x2) --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
         .btn-work {
             text-decoration: none; color: var(--ocean-primary); background: var(--white);
@@ -157,11 +164,10 @@
             <img src="https://scontent.fbkk13-3.fna.fbcdn.net/v/t51.75761-15/479489471_17867851716315569_3613117066442979958_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeG_CCTRHmAb56STrLqHGEXMb8TDfwhgT3pvxMN_CGBPes252AzQ5ypB_yr30xrRbRapzX1lBZVDir7StLnnaxYN&_nc_ohc=pqBSyTal2NcQ7kNvwGgY5QN&_nc_oc=AdmuVxGlsYvU1i1IB3RSeuYipNG7IQ08n1DJoWGyHwvRTrrrhl0deG8Y2ZInZh4arU8&_nc_zt=23&_nc_ht=scontent.fbkk13-3.fna&_nc_gid=2LTSzg1-sYrxR3APMMN9Hg&oh=00_AfuSLP2E49a4_HWN7eAS998p_IUqXVFRPLl5gWLIc5xaxg&oe=699E0499" class="profile-img img-3" alt="Profile 3">
         </div>
         <h1>Warut S.</h1>
-        <!-- เปลี่ยนจากข้อความธรรมดาเป็น Typing Target -->
         <p class="sub-title"><span id="typed"></span></p>
     </div>
 
-    <!-- Portfolio Samples -->
+    <!-- Portfolio Section -->
     <div class="section-title" data-aos="fade-right">Portfolio Samples</div>
     <div class="portfolio-grid" data-aos="zoom-in" data-aos-delay="200">
         <a href="web-design.html" class="btn-work"><i class="fas fa-laptop-code"></i> Websites</a>
@@ -244,12 +250,13 @@
     var typed = new Typed('#typed', {
         strings: [
             'Audiovisual Education Specialist', 
-            'IT Enthusiast'
+            'IT Enthusiast',
+            'Content Creator'
         ],
-        typeSpeed: 50,    // ความเร็วในการพิมพ์
-        backSpeed: 30,    // ความเร็วในการลบ
-        backDelay: 2000,  // ค้างไว้กี่วินาทีก่อนลบ
-        loop: true        // วนลูปตลอดไป
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true
     });
 </script>
 </body>
