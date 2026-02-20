@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warut S. | Digital Portfolio</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ocean-dark: #263238;
+            --ocean-primary: #546e7a;
+            --ocean-light: #f4f7f9;
+            --ocean-medium: #b0bec5;
+            --accent-gold: #b08d57;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ocean-light);
+            color: var(--ocean-dark);
+            padding: 80px 0;
+        }
+
+        .container-tight {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Profile Header */
+        .profile-header { text-align: center; margin-bottom: 60px; }
+        .profile-img {
+            width: 150px; height: 150px; border-radius: 50%;
+            object-fit: cover; border: 5px solid var(--white);
+            box-shadow: 0 15px 35px rgba(84, 110, 122, 0.15);
+            margin-bottom: 25px;
+        }
+
+        h1 { font-weight: 700; font-size: 2.4rem; letter-spacing: -0.04em; margin-bottom: 8px; }
+        .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; color: var(--ocean-medium);
+            margin-bottom: 20px; margin-top: 50px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-title::after { content: ""; height: 1px; flex-grow: 1; background: rgba(176, 190, 197, 0.4); }
+
+        /* Info Cards */
+        .info-card {
+            background: var(--white); border-radius: 24px; padding: 30px;
+            box-shadow: 0 4px 20px rgba(84, 110, 122, 0.05);
+            border: 1px solid rgba(176, 190, 197, 0.2);
+        }
+
+        .info-item {
+            position: relative; padding-left: 25px;
+            border-left: 2px solid var(--ocean-light); padding-bottom: 25px;
+        }
+        .info-item:last-child { padding-bottom: 0; border-left: 2px solid transparent; }
+        .info-item::before {
+            content: ''; position: absolute; left: -8px; top: 6px;
+            width: 14px; height: 14px; background: var(--ocean-medium);
+            border-radius: 50%; border: 3px solid var(--white);
+        }
+        .info-item.active::before { background: var(--ocean-primary); }
+        .item-title { font-weight: 600; font-size: 1.05rem; color: var(--ocean-dark); }
+        .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
+        
+        .badge-now { 
+            background: #e0f2f1; color: #00796b; font-size: 0.65rem; 
+            padding: 3px 10px; border-radius: 50px; font-weight: 700; margin-left: 8px; 
+        }
+
+        /* Portfolio Grid (2x2) */
+        .portfolio-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+        }
+
+        .btn-work {
+            text-decoration: none; color: var(--ocean-primary);
+            background: var(--white); border: 1px solid rgba(176, 190, 197, 0.3);
+            padding: 25px 15px; border-radius: 20px; text-align: center;
+            font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .btn-work i { font-size: 1.6rem; }
+        .btn-work:hover {
+            background: var(--ocean-primary); color: var(--white);
+            transform: translateY(-5px); box-shadow: 0 10px 20px rgba(84, 110, 122, 0.15);
+        }
+
+        /* Award Card */
+        .award-card {
+            text-decoration: none; display: flex; align-items: center; gap: 20px;
+            background: var(--white); padding: 20px 25px; border-radius: 20px;
+            border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.3s ease;
+        }
+        .award-icon {
+            width: 50px; height: 50px; background: #fff9e6; color: #fbc02d;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; border-radius: 15px;
+        }
+        .award-card:hover { border-color: var(--accent-gold); transform: translateX(5px); }
+        .award-info h4 { margin: 0; font-size: 1rem; font-weight: 600; color: var(--ocean-dark); }
+        .award-info p { margin: 0; font-size: 0.85rem; color: var(--ocean-primary); }
+
+        /* Contact Section */
+        .contact-card {
+            background: var(--ocean-dark);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .contact-link {
+            color: var(--ocean-medium);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s ease;
+        }
+        .contact-link:hover { color: var(--white); }
+
+        @media (max-width: 480px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-tight">
+    
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <img src="https://scontent.fbkk12-4.fna.fbcdn.net/v/t39.30808-6/556491357_122178813320579909_2943996564924045118_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeEbAVyrsO-qvTcwaqfL_AA8xrOzANChm7vGs7MA0KGbu2cOpHWnhm17HW68Dz4HZ60p-FnhHkemMxirWWkSlNPT&_nc_ohc=WBF3OpEB0jEQ7kNvwFe6xvK&_nc_oc=Admho7eDB8zFhMo8wjY_MgzlojJCCIXrP-hD83W7w6FmLRh1Hj5PnHxIjXIh5UGzOVs&_nc_zt=23&_nc_ht=scontent.fbkk12-4.fna&_nc_gid=Cco8x3n5vNwNQXBLrmdISQ&oh=00_Aft7xW1k_UNScmkrdkMKD1KkA9zR0NoXxo5q9-_L8-9S6w&oe=699DA1FA" alt="Warut S." class="profile-img">
+        <h1>Warut S.</h1>
+        <p class="sub-title">Audiovisual Education Specialist & IT Enthusiast</p>
+    </div>
+
+     <!-- 3. Portfolio Samples -->
+    <div class="section-title">Portfolio Samples</div>
+    <div class="portfolio-grid">
+        <a href="web-desing.php" class="btn-work">
+            <i class="fas fa-laptop-code"></i>
+            Websites
+        </a>
+        <a href="graphic.php" class="btn-work">
+            <i class="fas fa-bezier-curve"></i>
+            Graphic Design
+        </a>
+        <a href="video.php" class="btn-work">
+            <i class="fas fa-film"></i>
+            Video Editing
+        </a>
+        <!-- อัปเดตลิงก์ TikTok -->
+        <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work">
+            <i class="fas fa-spa"></i>
+            Floral Crafts
+        </a>
+    </div>
+
+<!-- 2. Work Experience -->
+<div class="section-title">Work Experience</div>
+    <div class="info-card">
+        <div class="info-item active">
+            <div class="item-title">ODL Ubon Ratchathani University <span class="badge-now">Now</span></div>
+            <div class="item-desc">Audiovisual Education Specialist</div>
+        </div>
+        <div class="info-item">
+            <div class="item-title">Siri Arun Care Ubon Ratchathani</div>
+            <div class="item-desc">Marketing Admin & Content Creator</div>
+        </div>
+        <div class="info-item">
+            <div class="item-title">Ubon brand</div>
+            <div class="item-desc">Video Editor</div>
+        </div>
+    </div>
+
+    <!-- 1. Education -->
+    <div class="section-title">Education</div>
+    <div class="info-card">
+        <div class="info-item">
+            <div class="item-title">Ubon Ratchathani University</div>
+            <div class="item-desc">
+                Bachelor of Science (Information Technology)<br>
+                <small>Faculty of Science</small>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="item-title">Assumption College Ubonratchathani</div>
+            <div class="item-desc">Senior High School (Science-Mathematics Program)</div>
+        </div>
+        <div class="info-item">
+            <div class="item-title">Narinukun School</div>
+            <div class="item-desc">Junior High School (General Education)</div>
+        </div>
+    </div>
+
+    <!-- 4. Awards -->
+    <div class="section-title">Awards & Achievements</div>
+    <a href="awards.php" class="award-card">
+        <div class="award-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <div class="award-info">
+            <h4>Honors & Recognitions</h4>
+            <p>View certifications and awards</p>
+        </div>
+        <i class="fas fa-chevron-right ms-auto text-muted"></i>
+    </a>
+
+    <!-- 5. Contact Section -->
+    <div class="section-title">Get In Touch</div>
+    <div class="contact-card">
+        <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 10px;">Feel free to reach out via email:</p>
+        <a href="mailto:warut.s@ubu.ac.th" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            warut.s@ubu.ac.th
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.75rem; color: var(--ocean-medium); letter-spacing: 0.05em;">
+        &copy; <?php echo date("Y"); ?> • DESIGNED BY WARUT S.
+    </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

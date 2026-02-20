@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Projects | Warut S.</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --ocean-dark: #263238;
+            --ocean-primary: #546e7a;
+            --ocean-light: #f4f7f9;
+            --ocean-medium: #b0bec5;
+            --white: #ffffff;
+            --accent-green: #81c784; /* สำหรับสาย Carbon Credit */
+            --accent-blue: #64b5f6;  /* สำหรับสาย Learning */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ocean-light);
+            color: var(--ocean-dark);
+            padding: 40px 0 80px 0;
+            overflow-x: hidden;
+        }
+
+        .container-tight {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Animated Back Button */
+        .nav-back { margin-bottom: 40px; }
+        .btn-back {
+            text-decoration: none; color: var(--ocean-primary);
+            font-size: 0.9rem; font-weight: 500; display: inline-flex;
+            align-items: center; gap: 8px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-back i { transition: transform 0.3s ease; }
+        .btn-back:hover { color: var(--ocean-dark); }
+        .btn-back:hover i { transform: translateX(-8px); }
+
+        h2 { font-weight: 700; font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -0.04em; }
+        .section-desc { color: var(--ocean-primary); margin-bottom: 50px; font-weight: 300; font-size: 1.1rem; }
+
+        /* Project Card with Hover Animation */
+        .project-section {
+            background: var(--white);
+            border-radius: 35px;
+            padding: 45px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 40px rgba(84, 110, 122, 0.06);
+            border: 1px solid rgba(176, 190, 197, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(84, 110, 122, 0.12);
+        }
+
+        .project-title {
+            font-weight: 700; font-size: 1.6rem; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 15px;
+        }
+
+        /* Icon Styling */
+        .title-icon {
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            background: var(--ocean-light);
+            transition: all 0.3s ease;
+        }
+        .project-section:hover .title-icon {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        /* Carousel Enhanced */
+        .carousel {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            margin: 25px 0 35px 0;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .carousel:hover .carousel-item img {
+            transform: scale(1.03);
+        }
+
+        /* Modern Visit Button */
+        .btn-visit {
+            display: inline-flex; align-items: center; gap: 12px;
+            background: var(--ocean-dark); color: var(--white);
+            text-decoration: none; padding: 14px 32px; border-radius: 50px;
+            font-size: 0.95rem; font-weight: 600; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(38, 50, 56, 0.2);
+        }
+        .btn-visit:hover {
+            background: var(--ocean-primary);
+            color: var(--white);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(38, 50, 56, 0.3);
+        }
+
+        /* Badges for Tech Stack */
+        .tech-badge {
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            background: var(--ocean-light);
+            color: var(--ocean-primary);
+            border-radius: 50px;
+            margin-right: 5px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item img { height: 300px; }
+            .project-section { padding: 30px; }
+            h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-tight">
+    
+    <!-- Navigation -->
+    <div class="nav-back" data-aos="fade-right">
+        <a href="index.php" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <!-- Header Section -->
+    <header data-aos="fade-up">
+        <h2>Web Development</h2>
+        <p class="section-desc">Turning complex requirements into seamless digital experiences.</p>
+    </header>
+
+    <!-- Project 1: OAR LLL -->
+    <div class="project-section" data-aos="fade-up" data-aos-delay="100">
+        <div class="project-title">
+            <div class="title-icon" style="color: var(--accent-blue);">
+                <i class="fas fa-book-open-reader"></i>
+            </div>
+            OAR Lifelong Learning
+        </div>
+        <div class="mb-3">
+            <span class="tech-badge">E-Learning</span>
+            <span class="tech-badge">Responsive Design</span>
+            <span class="tech-badge">UBU</span>
+        </div>
+        <p class="text-muted mb-4" style="font-size: 0.95rem; font-weight: 300;">
+            A dedicated platform for continuous education, featuring an intuitive UI for learners to access resources and courses from Ubon Ratchathani University.
+        </p>
+        
+        <!-- Carousel Project 1 -->
+        <div id="carouselWeb1" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselWeb1" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselWeb1" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselWeb1" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="3500">
+                    <img src="https://img2.pic.in.th/11c415757dda5403b.png" alt="OAR LLL Preview 1">
+                </div>
+                <div class="carousel-item" data-bs-interval="3500">
+                    <img src="https://img2.pic.in.th/2c30005e3eb7523bc.png" alt="OAR LLL Preview 2">
+                </div>
+                <div class="carousel-item" data-bs-interval="3500">
+                    <img src="https://img5.pic.in.th/file/secure-sv1/3fdb91a723c748c83.png" alt="OAR LLL Preview 3">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselWeb1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselWeb1" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <a href="https://www.oar.ubu.ac.th/OARLLL/" target="_blank" class="btn-visit">
+            Visit Live Site <i class="fas fa-external-link-alt"></i>
+        </a>
+    </div>
+
+    <!-- Project 2: VUBU Carbon -->
+    <div class="project-section" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-title">
+            <div class="title-icon" style="color: var(--accent-green);">
+                <i class="fas fa-leaf"></i>
+            </div>
+            VUBU - Carbon Credit Unit
+        </div>
+        <div class="mb-3">
+            <span class="tech-badge">Environmental IT</span>
+            <span class="tech-badge">Data Management</span>
+            <span class="tech-badge">Admin System</span>
+        </div>
+        <p class="text-muted mb-4" style="font-size: 0.95rem; font-weight: 300;">
+            A specialized evaluation and monitoring system for Carbon Credits and Climate Change, providing tools for assessment and verification processes.
+        </p>
+        
+        <!-- Carousel Project 2 -->
+        <div id="carouselWeb2" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselWeb2" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselWeb2" data-bs-slide-to="1"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="4500">
+                    <img src="https://img5.pic.in.th/file/secure-sv1/Untitled-design-557022453f75e88f4.png" alt="VUBU Preview 1">
+                </div>
+                <div class="carousel-item" data-bs-interval="4500">
+                    <img src="https://img5.pic.in.th/file/secure-sv1/screencapture-202-28-49-240-ubu-vvb-website-admin-index-php-2026-02-20-12_09_00.png" alt="VUBU Preview 2">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselWeb2" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselWeb2" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <a href="#" target="_blank" class="btn-visit">
+            View Case Study <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 50px; font-size: 0.8rem; color: var(--ocean-medium);">
+        &copy; <?php echo date("Y"); ?> • Designed with Purpose by Warut S.
+    </footer>
+
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+</script>
+</body>
+</html>
