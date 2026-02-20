@@ -46,7 +46,7 @@
         .profile-img-container {
             position: relative;
             display: inline-block;
-            width: 165px; /* กำหนดขนาดจองพื้นที่ไว้ */
+            width: 165px;
             height: 165px;
             animation: float 6s ease-in-out infinite;
         }
@@ -62,24 +62,19 @@
             box-shadow: 0 20px 40px rgba(84, 110, 122, 0.2);
             position: absolute;
             top: 0; left: 0;
-            opacity: 0; /* เริ่มต้นให้จางไว้ทั้งหมด */
+            opacity: 0;
             transition: transform 0.3s ease;
-            animation: imgFadeLoop 12s infinite; /* เล่นแอนิเมชันสลับรูป 12 วินาทีวนลูป */
+            animation: imgFadeLoop 12s infinite;
         }
 
-        /* รูปที่ 1: เริ่มทันที */
         .img-1 { animation-delay: 0s; }
-        /* รูปที่ 2: เริ่มวินาทีที่ 4 */
         .img-2 { animation-delay: 4s; }
-        /* รูปที่ 3: เริ่มวินาทีที่ 8 */
         .img-3 { animation-delay: 8s; }
 
         @keyframes imgFadeLoop {
-            0% { opacity: 0; }
-            8% { opacity: 1; }   /* จางขึ้นมา */
-            33% { opacity: 1; }  /* ค้างไว้จนถึง 1/3 ของเวลาทั้งหมด */
-            41% { opacity: 0; }  /* จางออก */
-            100% { opacity: 0; } /* รอวนใหม่ */
+            0%, 8%, 33%, 41% { opacity: 0; }
+            12%, 29% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         .profile-img-container:hover .profile-img {
@@ -88,7 +83,15 @@
         }
 
         h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 15px; }
-        .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; opacity: 0.8; }
+        
+        /* Typing Area Styling */
+        .sub-title { 
+            color: var(--ocean-primary); 
+            font-weight: 400; 
+            font-size: 1.1rem; 
+            opacity: 0.9;
+            min-height: 24px; /* กันเนื้อหากระตุกเวลาข้อความหายไป */
+        }
 
         /* --- Section Titles --- */
         .section-title {
@@ -109,20 +112,15 @@
             transition: all 0.4s ease;
         }
         .info-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(84, 110, 122, 0.1); }
-
         .info-item { position: relative; padding-left: 25px; border-left: 2px solid var(--ocean-light); padding-bottom: 25px; }
         .info-item:last-child { padding-bottom: 0; border-left: 2px solid transparent; }
-        .info-item::before {
-            content: ''; position: absolute; left: -8px; top: 6px;
-            width: 14px; height: 14px; background: var(--ocean-medium);
-            border-radius: 50%; border: 3px solid var(--white);
-        }
+        .info-item::before { content: ''; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; background: var(--ocean-medium); border-radius: 50%; border: 3px solid var(--white); }
         .info-item.active::before { background: var(--ocean-primary); box-shadow: 0 0 0 4px rgba(84, 110, 122, 0.1); }
         .item-title { font-weight: 600; font-size: 1.05rem; color: var(--ocean-dark); }
         .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
         .badge-now { background: #e0f2f1; color: #00796b; font-size: 0.65rem; padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px; }
 
-        /* --- Portfolio Grid (2x2) --- */
+        /* --- Portfolio Grid --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
         .btn-work {
             text-decoration: none; color: var(--ocean-primary); background: var(--white);
@@ -131,42 +129,27 @@
             display: flex; flex-direction: column; gap: 12px;
         }
         .btn-work i { font-size: 1.8rem; transition: all 0.3s ease; }
-        .btn-work:hover {
-            background: var(--ocean-primary); color: var(--white);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(84, 110, 122, 0.2);
-        }
+        .btn-work:hover { background: var(--ocean-primary); color: var(--white); transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(84, 110, 122, 0.2); }
         .btn-work:hover i { transform: scale(1.2) rotate(5deg); }
 
         /* --- Award Card --- */
-        .award-card {
-            text-decoration: none; display: flex; align-items: center; gap: 20px;
-            background: var(--white); padding: 25px 30px; border-radius: 24px;
-            border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.4s ease;
-        }
+        .award-card { text-decoration: none; display: flex; align-items: center; gap: 20px; background: var(--white); padding: 25px 30px; border-radius: 24px; border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.4s ease; }
         .award-icon { width: 55px; height: 55px; background: #fff9e6; color: #fbc02d; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 18px; transition: all 0.3s ease; }
         .award-card:hover { border-color: var(--accent-gold); transform: translateX(10px); background: #fffcf5; }
 
         /* --- Contact --- */
-        .contact-card {
-            background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%);
-            color: var(--white); padding: 40px 30px; border-radius: 30px;
-            text-align: center; margin-top: 15px; box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2);
-        }
+        .contact-card { background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%); color: var(--white); padding: 40px 30px; border-radius: 30px; text-align: center; margin-top: 15px; box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2); }
         .contact-link { color: var(--ocean-medium); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s ease; }
         .contact-link:hover { color: var(--white); transform: scale(1.05); }
 
-        @media (max-width: 480px) {
-            .portfolio-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2.2rem; }
-        }
+        @media (max-width: 480px) { .portfolio-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } }
     </style>
 </head>
 <body>
 
 <div class="container-tight">
     
-    <!-- Profile Header with 3 Switching Images -->
+    <!-- Profile Header -->
     <div class="profile-header" data-aos="fade-down" data-aos-duration="1000">
         <div class="profile-img-container">
             <img src="https://scontent.fbkk12-5.fna.fbcdn.net/v/t39.30808-6/555708555_122178812732579909_2507779576495177307_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFa3BfyQUOf6qqSBETuxyKgqlJfDqzT7ueqUl8OrNPu5zHhiTtjZ66q57Lxja1s3xnKKF4tk1C7g_4ndp6C6t7z&_nc_ohc=YMn8nSl8OncQ7kNvwFRRAat&_nc_oc=Adkx0iv3mr5awTI1lQirLqPc-Movru6Zg74AOh-Yl4WxtyqwFwr82SV-zJ53sSxFUzg&_nc_zt=23&_nc_ht=scontent.fbkk12-5.fna&_nc_gid=5Puztaq5kH_dg_9FQNuBgA&oh=00_Afvv-RwRL0d7KgkJ1awU9i36wK4UJiFXO4Uys0rksjoBeA&oe=699E0C6D" class="profile-img img-1" alt="Profile 1">
@@ -174,24 +157,17 @@
             <img src="https://scontent.fbkk13-3.fna.fbcdn.net/v/t51.75761-15/479489471_17867851716315569_3613117066442979958_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeG_CCTRHmAb56STrLqHGEXMb8TDfwhgT3pvxMN_CGBPes252AzQ5ypB_yr30xrRbRapzX1lBZVDir7StLnnaxYN&_nc_ohc=pqBSyTal2NcQ7kNvwGgY5QN&_nc_oc=AdmuVxGlsYvU1i1IB3RSeuYipNG7IQ08n1DJoWGyHwvRTrrrhl0deG8Y2ZInZh4arU8&_nc_zt=23&_nc_ht=scontent.fbkk13-3.fna&_nc_gid=2LTSzg1-sYrxR3APMMN9Hg&oh=00_AfuSLP2E49a4_HWN7eAS998p_IUqXVFRPLl5gWLIc5xaxg&oe=699E0499" class="profile-img img-3" alt="Profile 3">
         </div>
         <h1>Warut S.</h1>
-        <p class="sub-title">Audiovisual Education Specialist & IT Enthusiast</p>
+        <!-- เปลี่ยนจากข้อความธรรมดาเป็น Typing Target -->
+        <p class="sub-title"><span id="typed"></span></p>
     </div>
 
-    <!-- Portfolio Section -->
+    <!-- Portfolio Samples -->
     <div class="section-title" data-aos="fade-right">Portfolio Samples</div>
     <div class="portfolio-grid" data-aos="zoom-in" data-aos-delay="200">
-        <a href="web-design.html" class="btn-work">
-            <i class="fas fa-laptop-code"></i> Websites
-        </a>
-        <a href="graphic.html" class="btn-work">
-            <i class="fas fa-bezier-curve"></i> Graphic Design
-        </a>
-        <a href="video.html" class="btn-work">
-            <i class="fas fa-film"></i> Video Editing
-        </a>
-        <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work">
-            <i class="fas fa-spa"></i> Floral Crafts
-        </a>
+        <a href="web-design.html" class="btn-work"><i class="fas fa-laptop-code"></i> Websites</a>
+        <a href="graphic.html" class="btn-work"><i class="fas fa-bezier-curve"></i> Graphic Design</a>
+        <a href="video.html" class="btn-work"><i class="fas fa-film"></i> Video Editing</a>
+        <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work"><i class="fas fa-spa"></i> Floral Crafts</a>
     </div>
 
     <!-- Experience Section -->
@@ -257,9 +233,25 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Typed.js Library -->
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
 <script>
     AOS.init({ duration: 800, once: true, offset: 50 });
     document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Typing Animation Setup
+    var typed = new Typed('#typed', {
+        strings: [
+            'Audiovisual Education Specialist', 
+            'IT Enthusiast', 
+            'Content Creator'
+        ],
+        typeSpeed: 50,    // ความเร็วในการพิมพ์
+        backSpeed: 30,    // ความเร็วในการลบ
+        backDelay: 2000,  // ค้างไว้กี่วินาทีก่อนลบ
+        loop: true        // วนลูปตลอดไป
+    });
 </script>
 </body>
 </html>
