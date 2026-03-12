@@ -232,9 +232,42 @@
 
         .event-item { font-size: 0.75rem; color: var(--ocean-primary); margin-bottom: 5px; display: flex; align-items: start; gap: 8px; }
         .event-date { font-weight: 700; color: var(--accent-gold); min-width: 45px; }
+
+        /* --- Minimal Real-time Clock Styling --- */
+        .clock-glass {
+            position: fixed;
+            top: 25px; /* ปรับระดับความสูง */
+            right: 25px; /* ชิดขวา */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: var(--ocean-dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            z-index: 10001; /* ให้อยู่เหนือ Scroll Progress Bar (10000) */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            pointer-events: none; /* เพื่อไม่ให้บังการคลิกปุ่มที่อยู่ข้างใต้ในบางจังหวะ */
+            transition: all 0.3s ease;
+        }
+
+        /* ซ่อนนาฬิกาในมือถือถ้าหน้าจอเล็กเกินไป (เลือกได้ว่าจะซ่อนไหม) */
+        @media (max-width: 480px) {
+        .clock-glass {
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Real-time Clock Interface -->
+<div id="minimal-clock" class="clock-glass">00:00:00</div>
 
 <div class="container-tight">
     
@@ -467,6 +500,24 @@
         }
         
         generateCalendar(currentViewDate);
+
+        function updateRealTimeClock() {
+            const clockElement = document.getElementById('minimal-clock');
+            const now = new Date();
+    
+            // ดึงเวลาแบบ HH:mm:ss
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+        // อัปเดตทุกๆ 1 วินาที (1000 มิลลิวินาที)
+        setInterval(updateRealTimeClock, 1000);
+
+        // เรียกใช้ทันทีเมื่อโหลดหน้าเว็บ
+        updateRealTimeClock();
 </script>
 </body>
 </html>
