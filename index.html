@@ -303,14 +303,14 @@
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
     </a>
 
-   <!-- 6. Interactive Minimalist Calendar Section -->
+  <!-- 6. Interactive Calendar with Thai Holidays Section -->
     <div class="section-title" data-aos="fade-right">Daily Calendar</div>
     <div class="info-card calendar-card card-tilt" data-aos="fade-up" data-aos-delay="600">
         <div class="calendar-nav d-flex justify-content-between align-items-center">
             <button onclick="changeMonth(-1)" class="btn-cal-nav"><i class="fas fa-chevron-left"></i></button>
             <div class="text-center">
-                <h3 id="month-name" class="mb-0">March</h3>
-                <p id="year-val" class="mb-0 small opacity-75">2024</p>
+                <h3 id="month-name" class="mb-0">Month</h3>
+                <p id="year-val" class="mb-0 small opacity-75">Year</p>
             </div>
             <button onclick="changeMonth(1)" class="btn-cal-nav"><i class="fas fa-chevron-right"></i></button>
         </div>
@@ -326,7 +326,7 @@
         </div>
         <div id="calendar-days" class="calendar-days-grid"></div>
 
-        <!-- รายการวันสำคัญ -->
+        <!-- รายการวันสำคัญ (สากล + ไทย) -->
         <div id="important-days-list" class="mt-4 pt-3 border-top text-start">
             <!-- วันสำคัญจะแสดงตรงนี้ -->
         </div>
@@ -369,23 +369,36 @@
         loop: true
     });
 
-   // ฐานข้อมูลวันสำคัญสากล (รูปแบบ: เดือน[0-11]-วันที่)
-        const internationalDays = {
-            "0-1": "New Year's Day",
-            "1-14": "Valentine's Day",
-            "2-8": "International Women's Day",
-            "2-20": "International Day of Happiness",
-            "3-22": "Earth Day",
-            "4-1": "International Workers' Day",
-            "5-5": "World Environment Day",
-            "5-8": "World Oceans Day",
-            "8-13": "Programmers' Day", // วันที่ 256 ของปี (ประมาณ 13 ก.ย.)
-            "9-16": "World Food Day",
-            "10-19": "International Men's Day",
-            "11-25": "Christmas Day"
+   // ฐานข้อมูลวันสำคัญ (สากล + ไทย)
+        const holidays = {
+            "0-1": { name: "New Year's Day", type: "INT" },
+            "0-16": { name: "Teachers' Day (Thailand)", type: "TH" },
+            "1-14": { name: "Valentine's Day", type: "INT" },
+            "2-8": { name: "International Women's Day", type: "INT" },
+            "2-20": { name: "International Day of Happiness", type: "INT" },
+            "3-6": { name: "Chakri Memorial Day (Thailand)", type: "TH" },
+            "3-13": { name: "Songkran Festival", type: "TH" },
+            "3-14": { name: "Songkran Festival", type: "TH" },
+            "3-15": { name: "Songkran Festival", type: "TH" },
+            "3-22": { name: "Earth Day", type: "INT" },
+            "4-1": { name: "National Labour Day", type: "TH" },
+            "4-4": { name: "Coronation Day", type: "TH" },
+            "5-3": { name: "Queen Suthida's Birthday", type: "TH" },
+            "5-5": { name: "World Environment Day", type: "INT" },
+            "5-8": { name: "World Oceans Day", type: "INT" },
+            "6-28": { name: "King Vajiralongkorn's Birthday", type: "TH" },
+            "7-12": { name: "Mother's Day (Thailand)", type: "TH" },
+            "8-13": { name: "Programmers' Day", type: "INT" },
+            "9-13": { name: "King Bhumibol Memorial Day", type: "TH" },
+            "9-23": { name: "Chulalongkorn Day", type: "TH" },
+            "10-19": { name: "International Men's Day", type: "INT" },
+            "11-5": { name: "Father's Day (Thailand)", type: "TH" },
+            "11-10": { name: "Constitution Day", type: "TH" },
+            "11-25": { name: "Christmas Day", type: "INT" },
+            "11-31": { name: "New Year's Eve", type: "INT" }
         };
 
-        let currentViewDate = new Date(); // วันที่ที่กำลังดูอยู่ในปฏิทิน
+        let currentViewDate = new Date();
 
         function generateCalendar(date) {
             const calendarDays = document.getElementById('calendar-days');
@@ -406,46 +419,45 @@
             yearVal.innerText = viewYear;
             
             calendarDays.innerHTML = '';
-            eventList.innerHTML = '<h6 class="small fw-bold mb-2 opacity-50">Monthly Highlights</h6>';
+            eventList.innerHTML = '<h6 class="small fw-bold mb-2 opacity-50"><i class="fas fa-star me-1"></i> Monthly Highlights</h6>';
             
             let hasEvents = false;
 
-            // สร้างช่องว่างก่อนเริ่มวันที่ 1
             for (let i = 0; i < firstDay; i++) {
                 const emptyDiv = document.createElement('div');
                 emptyDiv.classList.add('day-number', 'day-muted');
                 calendarDays.appendChild(emptyDiv);
             }
             
-            // สร้างวันที่ในเดือนนั้น
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayDiv = document.createElement('div');
                 dayDiv.classList.add('day-number');
                 dayDiv.innerText = day;
                 
-                // ตรวจสอบว่าเป็นวันนี้หรือไม่
                 if (day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
                     dayDiv.classList.add('day-today');
                 }
                 
-                // ตรวจสอบวันสำคัญ
                 const eventKey = `${viewMonth}-${day}`;
-                if (internationalDays[eventKey]) {
+                if (holidays[eventKey]) {
                     dayDiv.classList.add('has-event');
-                    hasEvents = true;
+                    if (holidays[eventKey].type === "TH") dayDiv.style.color = "var(--accent-gold)";
                     
-                    // เพิ่มลงในรายการด้านล่าง
+                    hasEvents = true;
                     const item = document.createElement('div');
                     item.classList.add('event-item');
-                    item.innerHTML = `<span class="event-date">${day} ${months[viewMonth].substring(0,3)}</span> <span>${internationalDays[eventKey]}</span>`;
+                    const flagIcon = holidays[eventKey].type === "TH" ? '<i class="fas fa-flag small me-1"></i>' : '<i class="fas fa-globe-americas small me-1"></i>';
+                    item.innerHTML = `
+                        <span class="event-date">${day} ${months[viewMonth].substring(0,3)}</span> 
+                        <span>${flagIcon}${holidays[eventKey].name}</span>
+                    `;
                     eventList.appendChild(item);
                 }
-                
                 calendarDays.appendChild(dayDiv);
             }
 
             if (!hasEvents) {
-                eventList.innerHTML += '<p class="small opacity-50 m-0">No major international days this month.</p>';
+                eventList.innerHTML += '<p class="small opacity-50 m-0">No major holidays this month.</p>';
             }
         }
 
@@ -454,7 +466,6 @@
             generateCalendar(currentViewDate);
         }
         
-        // เริ่มต้นสร้างปฏิทินเมื่อโหลดหน้าเว็บ
         generateCalendar(currentViewDate);
 </script>
 </body>
