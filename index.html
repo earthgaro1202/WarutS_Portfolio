@@ -150,6 +150,55 @@
         .contact-link:hover { color: var(--white); transform: scale(1.05); }
 
         @media (max-width: 480px) { .portfolio-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } }
+
+        /* --- Calendar Styling --- */
+        .calendar-card {
+            text-align: center;
+            padding: 30px !important;
+        }
+        .calendar-header h3 {
+            font-weight: 800;
+            color: var(--ocean-dark);
+            margin: 0;
+            letter-spacing: -1px;
+        }
+        .calendar-header p {
+            color: var(--ocean-primary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .calendar-grid, .calendar-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .day-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--ocean-medium);
+            margin-bottom: 10px;
+        }
+        .day-number {
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-radius: 12px;
+            color: var(--ocean-primary);
+            transition: all 0.3s ease;
+        }
+        .day-number:hover {
+            background: rgba(84, 110, 122, 0.1);
+            color: var(--ocean-dark);
+        }
+        .day-today {
+            background: var(--ocean-primary) !important;
+            color: white !important;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(84, 110, 122, 0.3);
+        }
+        .day-muted {
+            opacity: 0.2;
+        }
     </style>
 </head>
 <body>
@@ -221,6 +270,27 @@
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
     </a>
 
+    <!-- 6. Minimalist Calendar Section -->
+    <div class="section-title" data-aos="fade-right">Daily Calendar</div>
+    <div class="info-card calendar-card tilt-card" data-aos="fade-up" data-aos-delay="600">
+        <div class="calendar-header">
+            <h3 id="month-name">March</h3>
+            <p id="year-val">2024</p>
+        </div>
+        <div class="calendar-grid">
+            <div class="day-label">Sun</div>
+            <div class="day-label">Mon</div>
+            <div class="day-label">Tue</div>
+            <div class="day-label">Wed</div>
+            <div class="day-label">Thu</div>
+            <div class="day-label">Fri</div>
+            <div class="day-label">Sat</div>
+        </div>
+        <div id="calendar-days" class="calendar-days-grid">
+            <!-- วันที่ถูกสร้างด้วย JavaScript -->
+        </div>
+    </div>
+
     <!-- Contact Section -->
     <div class="section-title" data-aos="fade-right">Get In Touch</div>
     <div class="contact-card" data-aos="zoom-out" data-aos-delay="600">
@@ -257,6 +327,52 @@
         backDelay: 2000,
         loop: true
     });
+
+    // --- Minimalist Calendar Logic ---
+        function generateCalendar() {
+            const calendarDays = document.getElementById('calendar-days');
+            const monthName = document.getElementById('month-name');
+            const yearVal = document.getElementById('year-val');
+            
+            const now = new Date();
+            const today = now.getDate();
+            const month = now.getMonth();
+            const year = now.getFullYear();
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            
+            monthName.innerText = months[month];
+            yearVal.innerText = year;
+            
+            // ล้างข้อมูลเก่า
+            calendarDays.innerHTML = '';
+            
+            // สร้างช่องว่างวันเริ่มต้น
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('day-number', 'day-muted');
+                calendarDays.appendChild(emptyDiv);
+            }
+            
+            // สร้างวันที่
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('day-number');
+                dayDiv.innerText = day;
+                
+                if (day === today) {
+                    dayDiv.classList.add('day-today');
+                }
+                
+                calendarDays.appendChild(dayDiv);
+            }
+        }
+        
+        // เรียกใช้งานฟังก์ชัน
+        generateCalendar();
 </script>
 </body>
 </html>
