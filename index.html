@@ -199,6 +199,39 @@
         .day-muted {
             opacity: 0.2;
         }
+
+        /* --- Interactive Calendar Styling --- */
+        .calendar-card { padding: 30px !important; text-align: center; }
+        .calendar-nav h3 { font-weight: 800; color: var(--ocean-dark); letter-spacing: -1px; font-size: 1.4rem; }
+        
+        .btn-cal-nav {
+            background: none; border: none; color: var(--ocean-primary);
+            width: 35px; height: 35px; border-radius: 50%;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-cal-nav:hover { background: rgba(84, 110, 122, 0.1); color: var(--ocean-dark); }
+
+        .calendar-grid, .calendar-days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .day-label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--ocean-medium); padding-bottom: 10px; }
+        
+        .day-number {
+            font-size: 0.85rem; padding: 10px 0; border-radius: 12px;
+            color: var(--ocean-primary); transition: all 0.3s ease; position: relative;
+        }
+        .day-number:hover:not(.day-muted) { background: rgba(84, 110, 122, 0.1); cursor: pointer; }
+        
+        .day-today { background: var(--ocean-primary) !important; color: white !important; font-weight: 700; box-shadow: 0 5px 15px rgba(84, 110, 122, 0.3); }
+        .day-muted { opacity: 0.15; }
+
+        /* จุดสัญลักษณ์ว่ามีวันสำคัญ */
+        .has-event::after {
+            content: ''; position: absolute; bottom: 5px; left: 50%;
+            transform: translateX(-50%); width: 4px; height: 4px;
+            background: var(--accent-gold); border-radius: 50%;
+        }
+
+        .event-item { font-size: 0.75rem; color: var(--ocean-primary); margin-bottom: 5px; display: flex; align-items: start; gap: 8px; }
+        .event-date { font-weight: 700; color: var(--accent-gold); min-width: 45px; }
     </style>
 </head>
 <body>
@@ -270,14 +303,19 @@
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
     </a>
 
-    <!-- 6. Minimalist Calendar Section -->
+   <!-- 6. Interactive Minimalist Calendar Section -->
     <div class="section-title" data-aos="fade-right">Daily Calendar</div>
-    <div class="info-card calendar-card tilt-card" data-aos="fade-up" data-aos-delay="600">
-        <div class="calendar-header">
-            <h3 id="month-name">March</h3>
-            <p id="year-val">2024</p>
+    <div class="info-card calendar-card card-tilt" data-aos="fade-up" data-aos-delay="600">
+        <div class="calendar-nav d-flex justify-content-between align-items-center">
+            <button onclick="changeMonth(-1)" class="btn-cal-nav"><i class="fas fa-chevron-left"></i></button>
+            <div class="text-center">
+                <h3 id="month-name" class="mb-0">March</h3>
+                <p id="year-val" class="mb-0 small opacity-75">2024</p>
+            </div>
+            <button onclick="changeMonth(1)" class="btn-cal-nav"><i class="fas fa-chevron-right"></i></button>
         </div>
-        <div class="calendar-grid">
+        
+        <div class="calendar-grid mt-4">
             <div class="day-label">Sun</div>
             <div class="day-label">Mon</div>
             <div class="day-label">Tue</div>
@@ -286,8 +324,11 @@
             <div class="day-label">Fri</div>
             <div class="day-label">Sat</div>
         </div>
-        <div id="calendar-days" class="calendar-days-grid">
-            <!-- วันที่ถูกสร้างด้วย JavaScript -->
+        <div id="calendar-days" class="calendar-days-grid"></div>
+
+        <!-- รายการวันสำคัญ -->
+        <div id="important-days-list" class="mt-4 pt-3 border-top text-start">
+            <!-- วันสำคัญจะแสดงตรงนี้ -->
         </div>
     </div>
 
@@ -328,51 +369,93 @@
         loop: true
     });
 
-    // --- Minimalist Calendar Logic ---
-        function generateCalendar() {
+   // ฐานข้อมูลวันสำคัญสากล (รูปแบบ: เดือน[0-11]-วันที่)
+        const internationalDays = {
+            "0-1": "New Year's Day",
+            "1-14": "Valentine's Day",
+            "2-8": "International Women's Day",
+            "2-20": "International Day of Happiness",
+            "3-22": "Earth Day",
+            "4-1": "International Workers' Day",
+            "5-5": "World Environment Day",
+            "5-8": "World Oceans Day",
+            "8-13": "Programmers' Day", // วันที่ 256 ของปี (ประมาณ 13 ก.ย.)
+            "9-16": "World Food Day",
+            "10-19": "International Men's Day",
+            "11-25": "Christmas Day"
+        };
+
+        let currentViewDate = new Date(); // วันที่ที่กำลังดูอยู่ในปฏิทิน
+
+        function generateCalendar(date) {
             const calendarDays = document.getElementById('calendar-days');
             const monthName = document.getElementById('month-name');
             const yearVal = document.getElementById('year-val');
+            const eventList = document.getElementById('important-days-list');
             
-            const now = new Date();
-            const today = now.getDate();
-            const month = now.getMonth();
-            const year = now.getFullYear();
+            const today = new Date();
+            const viewMonth = date.getMonth();
+            const viewYear = date.getFullYear();
             
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+            const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
             
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             
-            monthName.innerText = months[month];
-            yearVal.innerText = year;
+            monthName.innerText = months[viewMonth];
+            yearVal.innerText = viewYear;
             
-            // ล้างข้อมูลเก่า
             calendarDays.innerHTML = '';
+            eventList.innerHTML = '<h6 class="small fw-bold mb-2 opacity-50">Monthly Highlights</h6>';
             
-            // สร้างช่องว่างวันเริ่มต้น
+            let hasEvents = false;
+
+            // สร้างช่องว่างก่อนเริ่มวันที่ 1
             for (let i = 0; i < firstDay; i++) {
                 const emptyDiv = document.createElement('div');
                 emptyDiv.classList.add('day-number', 'day-muted');
                 calendarDays.appendChild(emptyDiv);
             }
             
-            // สร้างวันที่
+            // สร้างวันที่ในเดือนนั้น
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayDiv = document.createElement('div');
                 dayDiv.classList.add('day-number');
                 dayDiv.innerText = day;
                 
-                if (day === today) {
+                // ตรวจสอบว่าเป็นวันนี้หรือไม่
+                if (day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
                     dayDiv.classList.add('day-today');
+                }
+                
+                // ตรวจสอบวันสำคัญ
+                const eventKey = `${viewMonth}-${day}`;
+                if (internationalDays[eventKey]) {
+                    dayDiv.classList.add('has-event');
+                    hasEvents = true;
+                    
+                    // เพิ่มลงในรายการด้านล่าง
+                    const item = document.createElement('div');
+                    item.classList.add('event-item');
+                    item.innerHTML = `<span class="event-date">${day} ${months[viewMonth].substring(0,3)}</span> <span>${internationalDays[eventKey]}</span>`;
+                    eventList.appendChild(item);
                 }
                 
                 calendarDays.appendChild(dayDiv);
             }
+
+            if (!hasEvents) {
+                eventList.innerHTML += '<p class="small opacity-50 m-0">No major international days this month.</p>';
+            }
+        }
+
+        function changeMonth(offset) {
+            currentViewDate.setMonth(currentViewDate.getMonth() + offset);
+            generateCalendar(currentViewDate);
         }
         
-        // เรียกใช้งานฟังก์ชัน
-        generateCalendar();
+        // เริ่มต้นสร้างปฏิทินเมื่อโหลดหน้าเว็บ
+        generateCalendar(currentViewDate);
 </script>
 </body>
 </html>
