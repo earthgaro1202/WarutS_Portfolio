@@ -291,6 +291,35 @@
         <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work"><i class="fas fa-spa"></i> Floral Crafts</a>
     </div>
 
+    <!-- 6. Interactive Calendar with Thai Holidays Section -->
+    <div class="section-title" data-aos="fade-right">Daily Calendar</div>
+    <div class="info-card calendar-card card-tilt" data-aos="fade-up" data-aos-delay="600">
+        <div class="calendar-nav d-flex justify-content-between align-items-center">
+            <button onclick="changeMonth(-1)" class="btn-cal-nav"><i class="fas fa-chevron-left"></i></button>
+            <div class="text-center">
+                <h3 id="month-name" class="mb-0">Month</h3>
+                <p id="year-val" class="mb-0 small opacity-75">Year</p>
+            </div>
+            <button onclick="changeMonth(1)" class="btn-cal-nav"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="calendar-grid mt-4">
+            <div class="day-label">Sun</div>
+            <div class="day-label">Mon</div>
+            <div class="day-label">Tue</div>
+            <div class="day-label">Wed</div>
+            <div class="day-label">Thu</div>
+            <div class="day-label">Fri</div>
+            <div class="day-label">Sat</div>
+        </div>
+        <div id="calendar-days" class="calendar-days-grid"></div>
+
+        <!-- รายการวันสำคัญ (สากล + ไทย) -->
+        <div id="important-days-list" class="mt-4 pt-3 border-top text-start">
+            <!-- วันสำคัญจะแสดงตรงนี้ -->
+        </div>
+    </div>
+
     <!-- Experience Section -->
     <div class="section-title" data-aos="fade-right">Work Experience</div>
     <div class="info-card" data-aos="fade-up" data-aos-delay="300">
@@ -335,35 +364,6 @@
         </div>
         <i class="fas fa-chevron-right ms-auto text-muted"></i>
     </a>
-
-  <!-- 6. Interactive Calendar with Thai Holidays Section -->
-    <div class="section-title" data-aos="fade-right">Daily Calendar</div>
-    <div class="info-card calendar-card card-tilt" data-aos="fade-up" data-aos-delay="600">
-        <div class="calendar-nav d-flex justify-content-between align-items-center">
-            <button onclick="changeMonth(-1)" class="btn-cal-nav"><i class="fas fa-chevron-left"></i></button>
-            <div class="text-center">
-                <h3 id="month-name" class="mb-0">Month</h3>
-                <p id="year-val" class="mb-0 small opacity-75">Year</p>
-            </div>
-            <button onclick="changeMonth(1)" class="btn-cal-nav"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        
-        <div class="calendar-grid mt-4">
-            <div class="day-label">Sun</div>
-            <div class="day-label">Mon</div>
-            <div class="day-label">Tue</div>
-            <div class="day-label">Wed</div>
-            <div class="day-label">Thu</div>
-            <div class="day-label">Fri</div>
-            <div class="day-label">Sat</div>
-        </div>
-        <div id="calendar-days" class="calendar-days-grid"></div>
-
-        <!-- รายการวันสำคัญ (สากล + ไทย) -->
-        <div id="important-days-list" class="mt-4 pt-3 border-top text-start">
-            <!-- วันสำคัญจะแสดงตรงนี้ -->
-        </div>
-    </div>
 
     <!-- Contact Section -->
     <div class="section-title" data-aos="fade-right">Get In Touch</div>
