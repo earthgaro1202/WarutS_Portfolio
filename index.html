@@ -17,40 +17,21 @@
 
     <style>
         :root {
-            /* Light Mode Colors */
-            --bg-color: #f4f7f9;
-            --bg-gradient: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
-            --text-main: #263238;
-            --text-sub: #546e7a;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --border-color: rgba(255, 255, 255, 0.8);
-            
             --ocean-dark: #263238;
             --ocean-primary: #546e7a;
+            --ocean-light: #f4f7f9;
             --ocean-medium: #b0bec5;
             --accent-gold: #b08d57;
             --white: #ffffff;
         }
 
-        /* Dark Mode Colors */
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --bg-gradient: radial-gradient(circle at 10% 20%, rgba(15, 23, 42, 1) 0%, rgba(30, 41, 59, 1) 100%);
-            --text-main: #f1f5f9;
-            --text-sub: #94a3b8;
-            --card-bg: rgba(30, 41, 59, 0.5);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --white: #1e293b;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            background-image: var(--bg-gradient);
-            color: var(--text-main);
+            background-color: var(--ocean-light);
+            background-image: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%);
+            color: var(--ocean-dark);
             padding: 80px 0;
             overflow-x: hidden;
-            transition: background 0.5s ease, color 0.5s ease; /* เปลี่ยนโหมดแบบนุ่มนวล */
         }
 
         .container-tight {
@@ -59,28 +40,9 @@
             padding: 0 25px;
         }
 
-        /* --- Theme Switch Button --- */
-        .theme-switch-wrapper {
-            position: fixed;
-            top: 25px;
-            right: 120px; /* วางไว้ข้างนาฬิกา */
-            z-index: 10002;
-        }
-        .theme-switch {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-main);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-        .theme-switch:hover { transform: scale(1.1) rotate(15deg); }
-
         /* --- Profile Header & Snappy Image Switcher --- */
         .profile-header { text-align: center; margin-bottom: 60px; }
+        
         .profile-img-container {
             position: relative;
             display: inline-block;
@@ -95,106 +57,255 @@
         }
 
         .profile-img {
-            width: 160px; height: 160px; border-radius: 50%;
-            object-fit: cover; border: 6px solid var(--white);
+            width: 160px; 
+            height: 160px; 
+            border-radius: 50%;
+            object-fit: cover; 
+            border: 6px solid var(--white);
             box-shadow: 0 25px 50px rgba(84, 110, 122, 0.15);
-            position: absolute; top: 0; left: 0; opacity: 0;
+            position: absolute;
+            top: 0; 
+            left: 0;
+            opacity: 0;
             transform: scale(0.9) translateY(10px);
             transition: transform 0.5s ease;
             animation: snappySwitch 12s infinite;
         }
 
+        /* ลำดับชั้นรูปภาพและการหน่วงเวลา */
         .img-1 { animation-delay: 0s; z-index: 3; }
         .img-2 { animation-delay: 4s; z-index: 2; }
         .img-3 { animation-delay: 8s; z-index: 1; }
 
         @keyframes snappySwitch {
             0% { opacity: 0; transform: scale(0.9) translateY(10px); }
-            2% { opacity: 1; transform: scale(1) translateY(0); }
-            33.33% { opacity: 1; transform: scale(1) translateY(0); }
-            35.33% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            2% { opacity: 1; transform: scale(1) translateY(0); } /* เด้งขึ้นมาทับทันที */
+            33.33% { opacity: 1; transform: scale(1) translateY(0); } /* ค้างไว้ */
+            35.33% { opacity: 0; transform: scale(0.9) translateY(10px); } /* หายไปเพื่อเปลี่ยนรูปถัดไป */
             100% { opacity: 0; }
         }
 
-        h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 15px; color: var(--text-main); }
-        .sub-title { color: var(--ocean-primary); font-weight: 400; font-size: 1.1rem; opacity: 0.9; min-height: 24px; }
+        .profile-img-container:hover .profile-img {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(84, 110, 122, 0.25);
+        }
+
+        h1 { font-weight: 700; font-size: 2.6rem; letter-spacing: -0.04em; margin-top: 15px; }
+        
+        .sub-title { 
+            color: var(--ocean-primary); 
+            font-weight: 400; 
+            font-size: 1.1rem; 
+            opacity: 0.9;
+            min-height: 24px;
+        }
 
         /* --- Section Titles --- */
         .section-title {
             font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.2em; color: var(--text-sub);
+            letter-spacing: 0.2em; color: var(--ocean-medium);
             margin-bottom: 25px; margin-top: 50px;
             display: flex; align-items: center; gap: 12px;
         }
-        .section-title::after { content: ""; height: 1px; flex-grow: 1; background: var(--border-color); }
+        .section-title::after { content: ""; height: 1px; flex-grow: 1; background: rgba(176, 190, 197, 0.4); }
 
         /* --- Info Cards Glassmorphism --- */
         .info-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 28px; padding: 35px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(84, 110, 122, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             transition: all 0.4s ease;
         }
-        .info-card:hover { transform: translateY(-5px); }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(84, 110, 122, 0.1); }
         .info-item { position: relative; padding-left: 25px; border-left: 2px solid var(--ocean-light); padding-bottom: 25px; }
+        .info-item:last-child { padding-bottom: 0; border-left: 2px solid transparent; }
         .info-item::before { content: ''; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; background: var(--ocean-medium); border-radius: 50%; border: 3px solid var(--white); }
-        .info-item.active::before { background: var(--ocean-primary); }
-        .item-title { font-weight: 600; font-size: 1.05rem; color: var(--text-main); }
-        .item-desc { font-size: 0.88rem; color: var(--text-sub); line-height: 1.4; }
+        .info-item.active::before { background: var(--ocean-primary); box-shadow: 0 0 0 4px rgba(84, 110, 122, 0.1); }
+        .item-title { font-weight: 600; font-size: 1.05rem; color: var(--ocean-dark); }
+        .item-desc { font-size: 0.88rem; color: var(--ocean-primary); line-height: 1.4; margin-top: 2px; }
+        .badge-now { background: #e0f2f1; color: #00796b; font-size: 0.65rem; padding: 3px 12px; border-radius: 50px; font-weight: 700; margin-left: 8px; }
 
         /* --- Portfolio Grid (2x2) --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
         .btn-work {
-            text-decoration: none; color: var(--text-main); background: var(--card-bg);
-            border: 1px solid var(--border-color); padding: 28px 15px; border-radius: 24px; text-align: center;
+            text-decoration: none; color: var(--ocean-primary); background: var(--white);
+            border: 1px solid rgba(176, 190, 197, 0.3); padding: 28px 15px; border-radius: 24px; text-align: center;
             font-size: 0.95rem; font-weight: 600; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; gap: 12px; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; gap: 12px;
         }
-        .btn-work:hover { background: var(--ocean-primary); color: white; transform: translateY(-8px); }
+        .btn-work i { font-size: 1.8rem; transition: all 0.3s ease; }
+        .btn-work:hover { background: var(--ocean-primary); color: var(--white); transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(84, 110, 122, 0.2); }
+        .btn-work:hover i { transform: scale(1.2) rotate(5deg); }
 
         /* --- Award Card --- */
-        .award-card { text-decoration: none; display: flex; align-items: center; gap: 20px; background: var(--card-bg); padding: 25px 30px; border-radius: 24px; border: 1px solid var(--border-color); transition: all 0.4s ease; backdrop-filter: blur(10px); }
-        .award-icon { width: 55px; height: 55px; background: #fff9e6; color: #fbc02d; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 18px; }
+        .award-card { text-decoration: none; display: flex; align-items: center; gap: 20px; background: var(--white); padding: 25px 30px; border-radius: 24px; border: 1px solid rgba(176, 190, 197, 0.3); transition: all 0.4s ease; }
+        .award-icon { width: 55px; height: 55px; background: #fff9e6; color: #fbc02d; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 18px; transition: all 0.3s ease; }
+        .award-card:hover { border-color: var(--accent-gold); transform: translateX(10px); background: #fffcf5; }
 
         /* --- Contact --- */
-        .contact-card { background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%); color: white; padding: 40px 30px; border-radius: 30px; text-align: center; margin-top: 15px; }
-        .contact-link { color: var(--ocean-medium); text-decoration: none; font-size: 1.2rem; transition: all 0.3s ease; }
-        .contact-link:hover { color: white; }
+        .contact-card { background: linear-gradient(135deg, var(--ocean-dark) 0%, #37474f 100%); color: var(--white); padding: 40px 30px; border-radius: 30px; text-align: center; margin-top: 15px; box-shadow: 0 20px 40px rgba(38, 50, 56, 0.2); }
+        .contact-link { color: var(--ocean-medium); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: inline-flex; align-items: center; gap: 12px; transition: all 0.3s ease; }
+        .contact-link:hover { color: var(--white); transform: scale(1.05); }
+
+        @media (max-width: 480px) { .portfolio-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } }
 
         /* --- Calendar Styling --- */
-        .calendar-nav h3 { color: var(--text-main); }
-        .day-number { color: var(--text-main); }
-        .day-today { background: var(--ocean-primary) !important; color: white !important; }
-
-        /* --- Clock Styling --- */
-        .clock-glass {
-            position: fixed; top: 25px; right: 25px;
-            background: var(--card-bg); backdrop-filter: blur(10px);
-            padding: 8px 18px; border-radius: 50px; border: 1px solid var(--border-color);
-            color: var(--text-main); font-size: 0.85rem; font-weight: 600;
-            z-index: 10001; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        .calendar-card {
+            text-align: center;
+            padding: 30px !important;
+        }
+        .calendar-header h3 {
+            font-weight: 800;
+            color: var(--ocean-dark);
+            margin: 0;
+            letter-spacing: -1px;
+        }
+        .calendar-header p {
+            color: var(--ocean-primary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .calendar-grid, .calendar-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .day-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--ocean-medium);
+            margin-bottom: 10px;
+        }
+        .day-number {
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-radius: 12px;
+            color: var(--ocean-primary);
+            transition: all 0.3s ease;
+        }
+        .day-number:hover {
+            background: rgba(84, 110, 122, 0.1);
+            color: var(--ocean-dark);
+        }
+        .day-today {
+            background: var(--ocean-primary) !important;
+            color: white !important;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(84, 110, 122, 0.3);
+        }
+        .day-muted {
+            opacity: 0.2;
         }
 
-        .calendar-hidden { max-height: 0; opacity: 0; overflow: hidden; transform: translateY(-20px); transition: all 0.6s ease; }
-        .calendar-visible { max-height: 1000px; opacity: 1; transform: translateY(0); margin-bottom: 40px; }
+        /* --- Toggle Calendar Animation --- */
+        .calendar-hidden {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: translateY(-20px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
 
-        @media (max-width: 480px) { .portfolio-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .theme-switch-wrapper { right: 100px; } }
+        .calendar-visible {
+            max-height: 1000px; /* ความสูงที่เพียงพอสำหรับปฏิทิน */
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            margin-bottom: 40px;
+        }
+
+        .toggle-cal-btn {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px !important;
+            width: auto !important;
+            cursor: pointer;
+            border-radius: 50px !important;
+        }
+
+        .toggle-cal-btn i {
+            margin-bottom: 0 !important;
+            font-size: 1.1rem !important;
+        }
+
+        /* --- Interactive Calendar Styling --- */
+        .calendar-card { padding: 30px !important; text-align: center; }
+        .calendar-nav h3 { font-weight: 800; color: var(--ocean-dark); letter-spacing: -1px; font-size: 1.4rem; }
+        
+        .btn-cal-nav {
+            background: none; border: none; color: var(--ocean-primary);
+            width: 35px; height: 35px; border-radius: 50%;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-cal-nav:hover { background: rgba(84, 110, 122, 0.1); color: var(--ocean-dark); }
+
+        .calendar-grid, .calendar-days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .day-label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--ocean-medium); padding-bottom: 10px; }
+        
+        .day-number {
+            font-size: 0.85rem; padding: 10px 0; border-radius: 12px;
+            color: var(--ocean-primary); transition: all 0.3s ease; position: relative;
+        }
+        .day-number:hover:not(.day-muted) { background: rgba(84, 110, 122, 0.1); cursor: pointer; }
+        
+        .day-today { background: var(--ocean-primary) !important; color: white !important; font-weight: 700; box-shadow: 0 5px 15px rgba(84, 110, 122, 0.3); }
+        .day-muted { opacity: 0.15; }
+
+        /* จุดสัญลักษณ์ว่ามีวันสำคัญ */
+        .has-event::after {
+            content: ''; position: absolute; bottom: 5px; left: 50%;
+            transform: translateX(-50%); width: 4px; height: 4px;
+            background: var(--accent-gold); border-radius: 50%;
+        }
+
+        .event-item { font-size: 0.75rem; color: var(--ocean-primary); margin-bottom: 5px; display: flex; align-items: start; gap: 8px; }
+        .event-date { font-weight: 700; color: var(--accent-gold); min-width: 45px; }
+
+
+        /* --- Minimal Real-time Clock Styling --- */
+        .clock-glass {
+            position: fixed;
+            top: 25px; /* ปรับระดับความสูง */
+            right: 25px; /* ชิดขวา */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: var(--ocean-dark);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            z-index: 10001; /* ให้อยู่เหนือ Scroll Progress Bar (10000) */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            pointer-events: none; /* เพื่อไม่ให้บังการคลิกปุ่มที่อยู่ข้างใต้ในบางจังหวะ */
+            transition: all 0.3s ease;
+        }
+
+        /* ซ่อนนาฬิกาในมือถือถ้าหน้าจอเล็กเกินไป (เลือกได้ว่าจะซ่อนไหม) */
+        @media (max-width: 480px) {
+        .clock-glass {
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            }
+        }
     </style>
 </head>
-<body data-theme="light">
-    <!-- Real-time Clock -->
-    <div id="minimal-clock" class="clock-glass">00:00:00</div>
-
-    <!-- Theme Switcher Button -->
-    <div class="theme-switch-wrapper">
-        <div class="theme-switch" onclick="toggleTheme()">
-            <i id="theme-icon" class="fas fa-moon"></i>
-        </div>
-    </div>
+<body>
+    <!-- Real-time Clock Interface -->
+<div id="minimal-clock" class="clock-glass">00:00:00</div>
 
 <div class="container-tight">
+    
     <!-- Profile Header -->
     <div class="profile-header" data-aos="fade-down" data-aos-duration="1000">
         <div class="profile-img-container">
@@ -215,7 +326,7 @@
         <a href="https://www.tiktok.com/@bloom0978" target="_blank" class="btn-work"><i class="fas fa-spa"></i> Floral Crafts</a>
     </div>
 
-    <!-- Work Experience -->
+    <!-- Experience Section -->
     <div class="section-title" data-aos="fade-right">Work Experience</div>
     <div class="info-card" data-aos="fade-up" data-aos-delay="300">
         <div class="info-item active">
@@ -269,16 +380,18 @@
         </a>
     </div>
 
-    <!-- Calendar Section -->
-    <div class="section-title" data-aos="fade-right">Daily Calendar</div>
+    <!-- 6. Toggleable Minimalist Calendar Section -->
+      <div class="section-title" data-aos="fade-right">Daily Calendar</div>
+    <!-- ปุ่มสำหรับกดเปิดปฏิทิน -->
     <div class="text-center mb-4" data-aos="fade-up">
-        <button id="calendar-toggle-btn" class="btn-work" style="padding: 12px 25px; display: inline-block; width: auto; flex-direction: row; gap: 10px;" onclick="toggleCalendar()">
+        <button id="calendar-toggle-btn" class="btn-work tilt-card toggle-cal-btn" onclick="toggleCalendar()">
             <i class="fas fa-calendar-alt"></i>
             <span id="toggle-btn-text">Open Daily Calendar</span>
         </button>
     </div>
+        <!-- ส่วนปฏิทินที่ถูกซ่อนไว้ -->
     <div id="calendar-wrapper" class="calendar-hidden">
-        <div class="info-card calendar-card">
+        <div class="info-card calendar-card tilt-card">
             <div class="calendar-nav d-flex justify-content-between align-items-center">
                 <button onclick="changeMonth(-1)" class="btn-cal-nav"><i class="fas fa-chevron-left"></i></button>
                 <div class="text-center">
@@ -287,156 +400,192 @@
                 </div>
                 <button onclick="changeMonth(1)" class="btn-cal-nav"><i class="fas fa-chevron-right"></i></button>
             </div>
+            
             <div class="calendar-grid mt-4">
-                <div class="day-label">Sun</div><div class="day-label">Mon</div><div class="day-label">Tue</div><div class="day-label">Wed</div><div class="day-label">Thu</div><div class="day-label">Fri</div><div class="day-label">Sat</div>
+                <div class="day-label">Sun</div>
+                <div class="day-label">Mon</div>
+                <div class="day-label">Tue</div>
+                <div class="day-label">Wed</div>
+                <div class="day-label">Thu</div>
+                <div class="day-label">Fri</div>
+                <div class="day-label">Sat</div>
             </div>
             <div id="calendar-days" class="calendar-days-grid"></div>
-            <div id="important-days-list" class="mt-4 pt-3 border-top text-start"></div>
+
+            <div id="important-days-list" class="mt-4 pt-3 border-top text-start">
+                <!-- รายการวันสำคัญ -->
+            </div>
         </div>
     </div>
 
     <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.75rem; color: var(--ocean-medium);">
         &copy; <span id="current-year"></span> • DESIGNED BY WARUT S.
     </footer>
+
 </div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Typed.js Library -->
 <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 
 <script>
     AOS.init({ duration: 800, once: true, offset: 50 });
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    // Theme Switch Logic
-    function toggleTheme() {
-        const body = document.body;
-        const currentTheme = body.getAttribute('data-theme');
-        const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        body.setAttribute('data-theme', targetTheme);
-        localStorage.setItem('portfolio-theme', targetTheme);
-        updateThemeIcon(targetTheme);
-    }
-
-    function updateThemeIcon(theme) {
-        const icon = document.getElementById('theme-icon');
-        if (theme === 'dark') {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        }
-    }
-
-    // Load Saved Theme
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
-
-    // Typing Effect
-    new Typed('#typed', {
-        strings: ['Audiovisual Education Specialist', 'IT Enthusiast'],
-        typeSpeed: 50, backSpeed: 30, backDelay: 2000, loop: true
+    // Typing Animation Setup
+    var typed = new Typed('#typed', {
+        strings: [
+            'Audiovisual Education Specialist', 
+            'IT Enthusiast'
+        ],
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true
     });
 
-    // Calendar Data
-    const holidays = {
-        "0-1": { name: "New Year's Day", type: "INT" },
-        "0-16": { name: "Teachers' Day (TH)", type: "TH" },
-        "1-14": { name: "Valentine's Day", type: "INT" },
-        "3-6": { name: "Chakri Day (TH)", type: "TH" },
-        "3-13": { name: "Songkran (TH)", type: "TH" },
-        "3-14": { name: "Songkran (TH)", type: "TH" },
-        "3-15": { name: "Songkran (TH)", type: "TH" },
-        "6-28": { name: "King's Birthday (TH)", type: "TH" },
-        "7-12": { name: "Mother's Day (TH)", type: "TH" },
-        "9-13": { name: "King Bhumibol Memorial (TH)", type: "TH" },
-        "9-23": { name: "Chulalongkorn Day (TH)", type: "TH" },
-        "11-5": { name: "Father's Day (TH)", type: "TH" },
-        "11-10": { name: "Constitution Day (TH)", type: "TH" },
-        "11-25": { name: "Christmas Day", type: "INT" }
-    };
+   // ฐานข้อมูลวันสำคัญ (สากล + ไทย)
+        const holidays = {
+            "0-1": { name: "New Year's Day", type: "INT" },
+            "0-16": { name: "Teachers' Day (Thailand)", type: "TH" },
+            "1-14": { name: "Valentine's Day", type: "INT" },
+            "2-8": { name: "International Women's Day", type: "INT" },
+            "2-20": { name: "International Day of Happiness", type: "INT" },
+            "3-6": { name: "Chakri Memorial Day (Thailand)", type: "TH" },
+            "3-13": { name: "Songkran Festival", type: "TH" },
+            "3-14": { name: "Songkran Festival", type: "TH" },
+            "3-15": { name: "Songkran Festival", type: "TH" },
+            "3-22": { name: "Earth Day", type: "INT" },
+            "4-1": { name: "National Labour Day", type: "TH" },
+            "4-4": { name: "Coronation Day", type: "TH" },
+            "5-3": { name: "Queen Suthida's Birthday", type: "TH" },
+            "5-5": { name: "World Environment Day", type: "INT" },
+            "5-8": { name: "World Oceans Day", type: "INT" },
+            "6-28": { name: "King Vajiralongkorn's Birthday", type: "TH" },
+            "7-12": { name: "Mother's Day (Thailand)", type: "TH" },
+            "8-13": { name: "Programmers' Day", type: "INT" },
+            "9-13": { name: "King Bhumibol Memorial Day", type: "TH" },
+            "9-23": { name: "Chulalongkorn Day", type: "TH" },
+            "10-19": { name: "International Men's Day", type: "INT" },
+            "11-5": { name: "Father's Day (Thailand)", type: "TH" },
+            "11-10": { name: "Constitution Day", type: "TH" },
+            "11-25": { name: "Christmas Day", type: "INT" },
+            "11-31": { name: "New Year's Eve", type: "INT" }
+        };
 
-    let currentViewDate = new Date();
+        let currentViewDate = new Date();
 
-    function generateCalendar(date) {
-        const calendarDays = document.getElementById('calendar-days');
-        const monthNameText = document.getElementById('month-name');
-        const yearValText = document.getElementById('year-val');
-        const eventList = document.getElementById('important-days-list');
-        const today = new Date();
-        const viewMonth = date.getMonth();
-        const viewYear = date.getFullYear();
-        const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
-        monthNameText.innerText = months[viewMonth];
-        yearValText.innerText = viewYear;
-        calendarDays.innerHTML = '';
-        eventList.innerHTML = '<h6 class="small fw-bold mb-2 opacity-50"><i class="fas fa-star me-1"></i> Monthly Highlights</h6>';
-        
-        let hasEvents = false;
-        for (let i = 0; i < firstDay; i++) {
-            const emptyDiv = document.createElement('div');
-            emptyDiv.classList.add('day-number', 'day-muted');
-            calendarDays.appendChild(emptyDiv);
-        }
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayDiv = document.createElement('div');
-            dayDiv.classList.add('day-number');
-            dayDiv.innerText = day;
-            if (day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
-                dayDiv.classList.add('day-today');
+        function generateCalendar(date) {
+            const calendarDays = document.getElementById('calendar-days');
+            const monthName = document.getElementById('month-name');
+            const yearVal = document.getElementById('year-val');
+            const eventList = document.getElementById('important-days-list');
+            
+            const today = new Date();
+            const viewMonth = date.getMonth();
+            const viewYear = date.getFullYear();
+            
+            const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+            const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+            
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            
+            monthName.innerText = months[viewMonth];
+            yearVal.innerText = viewYear;
+            
+            calendarDays.innerHTML = '';
+            eventList.innerHTML = '<h6 class="small fw-bold mb-2 opacity-50"><i class="fas fa-star me-1"></i> Monthly Highlights</h6>';
+            
+            let hasEvents = false;
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('day-number', 'day-muted');
+                calendarDays.appendChild(emptyDiv);
             }
-            const eventKey = `${viewMonth}-${day}`;
-            if (holidays[eventKey]) {
-                dayDiv.classList.add('has-event');
-                if (holidays[eventKey].type === "TH") dayDiv.style.color = "var(--accent-gold)";
-                hasEvents = true;
-                const item = document.createElement('div');
-                item.className = 'event-item';
-                item.innerHTML = `<span class="event-date">${day} ${months[viewMonth].substring(0,3)}</span> <span>${holidays[eventKey].name}</span>`;
-                eventList.appendChild(item);
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('day-number');
+                dayDiv.innerText = day;
+                
+                if (day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+                    dayDiv.classList.add('day-today');
+                }
+                
+                const eventKey = `${viewMonth}-${day}`;
+                if (holidays[eventKey]) {
+                    dayDiv.classList.add('has-event');
+                    if (holidays[eventKey].type === "TH") dayDiv.style.color = "var(--accent-gold)";
+                    
+                    hasEvents = true;
+                    const item = document.createElement('div');
+                    item.classList.add('event-item');
+                    const flagIcon = holidays[eventKey].type === "TH" ? '<i class="fas fa-flag small me-1"></i>' : '<i class="fas fa-globe-americas small me-1"></i>';
+                    item.innerHTML = `
+                        <span class="event-date">${day} ${months[viewMonth].substring(0,3)}</span> 
+                        <span>${flagIcon}${holidays[eventKey].name}</span>
+                    `;
+                    eventList.appendChild(item);
+                }
+                calendarDays.appendChild(dayDiv);
             }
-            calendarDays.appendChild(dayDiv);
-        }
-        if (!hasEvents) eventList.innerHTML += '<p class="small opacity-50 m-0">No major holidays this month.</p>';
-    }
 
-    function toggleCalendar() {
-        const wrapper = document.getElementById('calendar-wrapper');
-        const btnText = document.getElementById('toggle-btn-text');
-        const btnIcon = document.querySelector('#calendar-toggle-btn i');
-        if (wrapper.classList.contains('calendar-visible')) {
-            wrapper.classList.remove('calendar-visible');
-            btnText.innerText = "Open Daily Calendar";
-            btnIcon.className = "fas fa-calendar-alt";
-        } else {
-            wrapper.classList.add('calendar-visible');
-            btnText.innerText = "Hide Calendar";
-            btnIcon.className = "fas fa-times";
-            setTimeout(() => wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300);
+            if (!hasEvents) {
+                eventList.innerHTML += '<p class="small opacity-50 m-0">No major holidays this month.</p>';
+            }
         }
-    }
 
-    function changeMonth(offset) {
-        currentViewDate.setMonth(currentViewDate.getMonth() + offset);
+    // --- Toggle Calendar Function ---
+        function toggleCalendar() {
+            const wrapper = document.getElementById('calendar-wrapper');
+            const btnText = document.getElementById('toggle-btn-text');
+            const btnIcon = document.querySelector('#calendar-toggle-btn i');
+            
+            if (wrapper.classList.contains('calendar-visible')) {
+                // ถ้าเปิดอยู่ ให้ปิด
+                wrapper.classList.remove('calendar-visible');
+                btnText.innerText = "Open Daily Calendar";
+                btnIcon.className = "fas fa-calendar-alt";
+            } else {
+                // ถ้าปิดอยู่ ให้เปิด
+                wrapper.classList.add('calendar-visible');
+                btnText.innerText = "Hide Calendar";
+                btnIcon.className = "fas fa-times";
+                
+                // เลื่อนหน้าจอลงมาให้เห็นปฏิทินเล็กน้อย (Optional)
+                setTimeout(() => {
+                    wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 300);
+            }
+        }
+
+        function changeMonth(offset) {
+            currentViewDate.setMonth(currentViewDate.getMonth() + offset);
+            generateCalendar(currentViewDate);
+        }
+        
         generateCalendar(currentViewDate);
-    }
-    
-    generateCalendar(currentViewDate);
 
-    function updateRealTimeClock() {
-        const clockElement = document.getElementById('minimal-clock');
-        const now = new Date();
-        clockElement.textContent = now.getHours().toString().padStart(2, '0') + ":" + 
-                                  now.getMinutes().toString().padStart(2, '0') + ":" + 
-                                  now.getSeconds().toString().padStart(2, '0');
+        function updateRealTimeClock() {
+            const clockElement = document.getElementById('minimal-clock');
+            const now = new Date();
+    
+            // ดึงเวลาแบบ HH:mm:ss
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
-    setInterval(updateRealTimeClock, 1000);
-    updateRealTimeClock();
+
+        // อัปเดตทุกๆ 1 วินาที (1000 มิลลิวินาที)
+        setInterval(updateRealTimeClock, 1000);
+
+        // เรียกใช้ทันทีเมื่อโหลดหน้าเว็บ
+        updateRealTimeClock();
 </script>
 </body>
 </html>
