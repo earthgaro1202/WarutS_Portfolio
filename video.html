@@ -38,7 +38,6 @@
             padding: 0 25px;
         }
 
-        /* Animated Back Button (Same as index/web) */
         .nav-back { margin-bottom: 40px; }
         .btn-back {
             text-decoration: none; color: var(--ocean-primary);
@@ -60,7 +59,6 @@
         h2 { font-weight: 700; font-size: 2.8rem; letter-spacing: -0.04em; margin-bottom: 10px; }
         .section-desc { color: var(--ocean-primary); margin-bottom: 60px; font-weight: 300; font-size: 1.15rem; opacity: 0.8; }
 
-        /* Decorative Section Titles */
         .category-title {
             font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.15em; color: var(--ocean-medium);
@@ -69,7 +67,6 @@
         }
         .category-title::after { content: ""; height: 1px; flex-grow: 1; background: rgba(176, 190, 197, 0.4); }
 
-        /* Video Card Glassmorphism */
         .video-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(15px);
@@ -89,9 +86,7 @@
         .video-info h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--ocean-dark); }
         .video-info p { font-size: 0.9rem; color: var(--ocean-primary); margin: 0; font-weight: 300; line-height: 1.5; }
 
-        /* Custom Ratios */
         .ratio-shorts { --bs-aspect-ratio: 177.77%; } /* 9:16 */
-        
         iframe { border: none !important; }
 
         @media (max-width: 768px) {
@@ -104,57 +99,73 @@
 
 <div class="container-video">
     
-    <!-- Navigation -->
     <div class="nav-back" data-aos="fade-right">
         <a href="index.html" class="btn-back">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
     </div>
 
-    <!-- Header -->
     <header data-aos="fade-up">
         <h2>Video Production</h2>
         <p class="section-desc">Visual storytelling through editing, motion graphics, and cinematography.</p>
     </header>
 
-     <!-- 2. YouTube Shorts / Vertical Content (9:16) -->
-        <div class="category-title" data-aos="fade-up">Shorts & Mobile Content</div>
-    <div class="row g-4">
-        <!-- Short 1 -->
-        <div class="col-6 col-md-4" data-aos="zoom-in">
+    <!-- หมวด Shorts & Mobile Content -->
+    <div class="category-title" data-aos="fade-up">Shorts & Mobile Content</div>
+    <div class="row g-4 mb-5">
+        <!-- YouTube Short -->
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="100">
             <div class="video-card">
                 <div class="ratio ratio-shorts">
-                    <!-- ใส่ Link YouTube Shorts -->
-                    <iframe src="https://www.youtube.com/embed/SvwxgSwDwhI" title="YouTube Shorts" allowfullscreen></iframe>
-                </div>
-                <div class="video-info p-3">
-                    <h4 style="font-size: 0.9rem;">Creative Short 01</h4>
-                </div>
-            </div>
-        </div>
-
-    <!-- 1. Featured Videos (16:9) -->
-    <div class="category-title" data-aos="fade-up">Featured Projects</div>
-    <div class="row">
-        <!-- Video 1 -->
-        <div class="col-md-12" data-aos="fade-up">
-            <div class="video-card">
-                <div class="ratio ratio-16x9">
-                    <!-- เปลี่ยน VIDEO_ID เป็นไอดีคลิป YouTube ของคุณ -->
-                    <iframe src="https://www.youtube.com/embed/XdkYcghleRQ" title="YouTube video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/7V-fM02n-4Q" title="YouTube Shorts" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
-                    <h4>Main Project Showcase</h4>
-                    <p>Highlighting professional editing and color grading techniques.</p>
+                    <h4 style="font-size: 1rem;">Creative Short 01</h4>
+                    <p>YouTube Shorts</p>
                 </div>
             </div>
         </div>
 
-        <!-- Video 2 -->
-        <div class="col-md-6" data-aos="fade-up">
+        <!-- Facebook Reel (อัปเดตลิงก์ใหม่) -->
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="video-card">
+                <div class="ratio ratio-shorts">
+                    <iframe 
+                        src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F27382228191446220%2F&show_text=0&width=267" 
+                        style="border:none;overflow:hidden" 
+                        scrolling="no" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h4 style="font-size: 1rem;">Facebook Reel</h4>
+                    <p>Mobile Production</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- หมวด Featured Projects -->
+    <div class="category-title" data-aos="fade-up">Featured Projects</div>
+    <div class="row">
+        <div class="col-md-12" data-aos="fade-up" data-aos-delay="300">
             <div class="video-card">
                 <div class="ratio ratio-16x9">
-                    <iframe src="https://www.youtube.com/embed/4xJFN0RU8pc" title="YouTube video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
+                </div>
+                <div class="video-info text-center py-4">
+                    <h4>Main Project Showcase</h4>
+                    <p>Master collection of professional editing and color grading.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="video-card">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" title="YouTube video" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <h4>Event Highlight</h4>
@@ -163,40 +174,30 @@
             </div>
         </div>
 
-        <!-- Video 3 -->
-        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="video-card">
                 <div class="ratio ratio-16x9">
-                    <iframe src="https://www.youtube.com/embed/LBWjOdpry7E" title="YouTube video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <h4>Motion Graphics</h4>
-                    <p>Information design with smooth animations and AI</p>
+                    <p>Smooth animations and AI-driven visuals.</p>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-    <!-- Footer -->
     <footer style="text-align: center; margin-top: 80px; padding-bottom: 40px; font-size: 0.8rem; color: var(--ocean-medium);">
         &copy; <span id="year"></span> • Designed with Purpose by Warut S.
     </footer>
 
 </div>
 
-<!-- Bootstrap 5 JS -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- AOS JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100
-    });
-    // Set Year
+    AOS.init({ duration: 1000, once: true, offset: 100 });
     document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
